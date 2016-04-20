@@ -25,4 +25,3 @@ void sepia_c    (
 }
 
 
-
