@@ -6,8 +6,6 @@
 
 #define P 2
 
-#define valorMax 5*5*255*3*255
-
 void ldrMath(bgra_t *source, bgra_t *destiny, int alpha, int i, int j, unsigned char *src_matrix, int cols, int filas, int src_row_size);
 char sumagb(int i, int j, unsigned char *src_matrix, int src_row_size);
 
@@ -31,7 +29,7 @@ void ldr_c    (
             bgra_t *p_s = (bgra_t*) &src_matrix[i][j * 4];
             //ldrMath(p_s, p_d, alpha, i, j, src, cols, filas, src_row_size);
             if((i > 2) && (j > 2) && ((i+2) < filas) && ((j+2) < cols)){
-              float sumaRGB = sumargb(i, j, src, src_row_size);
+//              float sumaRGB = sumargb(i, j, src, src_row_size);
               int suma = 0;
               int contadorI = -2;
               for(contadorI = -2; contadorI < 3; contadorI++){
@@ -43,17 +41,16 @@ void ldr_c    (
                 }
               }
 
+              int valorMax = 5*5*255*3*255;
 
-              float b = ((source->b) + ((alpha*sumaRGB / valorMax)*(source->b)));
-              float g = ((source->g) + ((alpha*sumaRGB / valorMax)*(source->g)));
-              float r = ((source->r) + ((alpha*sumaRGB / valorMax)*(source->r)));
+              int b = ((p_s->b) + (alpha*suma* (p_s->b)) / valorMax);
+              int g = ((p_s->g) + (alpha*suma* (p_s->g)) / valorMax);
+              int r = ((p_s->r) + (alpha*suma* (p_s->r)) / valorMax);
 
-              destiny->b = MIN(MAX(b, 0), 255);
-              destiny->g = MIN(MAX(g, 0), 255);
-              destiny->r = MIN(MAX(r, 0), 255);
+              p_d->b = MIN(MAX(b, 0), 255);
+              p_d->g = MIN(MAX(g, 0), 255);
+              p_d->r = MIN(MAX(r, 0), 255);
             }
-
-
         }
     }
 }
