@@ -11,7 +11,7 @@ section .text
 	;int cols,						rcx
 	;int src_row_size,		r8
 	;int dst_row_size,		r9
-	;int alpha)						[rsp + 0]
+	;int alpha)						[rbp + 16]
 
 ldr_asm:
 	push rbp
@@ -22,6 +22,6 @@ ldr_asm:
 	push r15
 	push rbx
 ;stackframe
-	;aca, int alpha estaria en [rsp - 48]
 
-    ret
+
+  ret
