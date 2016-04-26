@@ -24,7 +24,7 @@ void cropflip_c    (
 	int itDstY = 0;
 	for (int i = offsety+tamy-1; i >= finy; i--) {
 		int itDstX = 0;
-		for (int j = offsetx; j < finx+offsetx; j++) {
+		for (int j = offsetx; j < finx; j++) {
 			bgra_t *p_d = (bgra_t*) &dst_matrix[itDstY][itDstX * 4];
 			bgra_t *p_s = (bgra_t*) &src_matrix[i][j * 4];
 			*p_d = *p_s;
