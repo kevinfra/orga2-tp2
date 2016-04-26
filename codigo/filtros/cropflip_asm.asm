@@ -28,10 +28,13 @@ cropflip_asm:
 	mov edx, offsety ;edx = tamy
 	add edx, tamy ;edx += offsety
 	sub edx, 1 ; queda edx = tamy+offsety-1
-
+	
+	xor rcx, rcx
+	mov rcx, 4
 	.avanzarOffsetX:
 	add rdi, offsetx ; src += offsetx
-
+	loop .avanzarOffsetX
+	
 	;ahora tengo que avanzar en Y:
 	.avanzarOffsetY:
 	cmp edx, 0
@@ -71,7 +74,10 @@ cropflip_asm:
 	mov r12d, tamx ;aqui, deberia ser |rdi| = tamx (en posicion)
 ;	sub r12d, offsetx
 	sub rdi, r12 ;asi que con restar offsetx, volveria a la ubicacion
-
+	sub rdi, r12
+	sub rdi, r12
+	sub rdi, r12
+	
 	jmp .forTamy
 	
   .fin:
