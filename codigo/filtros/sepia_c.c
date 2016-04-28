@@ -20,10 +20,10 @@ void sepia_c    (
         {
             bgra_t *p_d = (bgra_t*) &dst_matrix[i][j * 4];
             bgra_t *p_s = (bgra_t*) &src_matrix[i][j * 4];
-						int sumargb = (p_s->r + p_s->g + p_s->b);
+			int sumargb = (p_s->r + p_s->g + p_s->b);
             p_d->r = MIN(0.5*sumargb, 255);
-						p_d->g = MIN(0.3*sumargb, 255);
-						p_d->b = MIN(0.2*sumargb, 255);
+			p_d->g = MIN(0.3*sumargb, 255);
+			p_d->b = MIN(0.2*sumargb, 255);
             p_d->a = p_s->a;
         }
     }
