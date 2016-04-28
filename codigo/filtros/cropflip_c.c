@@ -18,18 +18,11 @@ void cropflip_c    (
 
 	// ejemplo de uso de src_matrix y dst_matrix (copia una parte de la imagen)
 
-	int finy = offsetx;
-	int finx = tamx + offsetx;
-
-	int itDstY = 0;
-	for (int i = offsety+tamy-1; i >= finy; i--) {
-		int itDstX = 0;
-		for (int j = offsetx; j < finx; j++) {
-			bgra_t *p_d = (bgra_t*) &dst_matrix[itDstY][itDstX * 4];
-			bgra_t *p_s = (bgra_t*) &src_matrix[i][j * 4];
+	for (int i = 0; i < tamy; i++) {
+		for (int j = 0; j < tamx; j++) {
+			bgra_t *p_d = (bgra_t*) &dst_matrix[i][j * 4];
+			bgra_t *p_s = (bgra_t*) &src_matrix[tamy + offsety - i -1][(offsetx + j) * 4];
 			*p_d = *p_s;
-			itDstX++;
 		}
-		itDstY++;
 	}
 }
