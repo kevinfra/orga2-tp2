@@ -5,8 +5,8 @@ section .data
 %define tam1pixel 4
 %define tam2pixel 8
 %define tam4pixel 16
-max: dd 0, 4876875, 4876875, 4876875
-borrarA: dw 0xff, 0xff, 0xff, 0, 0xff, 0xff, 0xff, 0
+max: dd 4876875, 4876875, 4876875, 0
+borrarA: dw 0xffff, 0xffff, 0xffff, 0, 0xffff, 0xffff, 0xffff, 0
 section .text
 ;void ldr_asm    (
 	;unsigned char *src,  rdi
@@ -125,7 +125,7 @@ xor r12,r12
 		movdqu xmm1, xmm2
 		movdqu xmm3, xmm2
 		shufps xmm1, xmm2, 11001100b
-		shufps xmm1, xmm3, 00101100b ; xmm1 = |basura|suma|suma|suma|
+		shufps xmm1, xmm3, 11001000b ; xmm1 = |basura|suma|suma|suma|
 		movdqu xmm2, [rdi]
 		punpcklbw xmm2, xmm4
 		punpcklwd xmm2, xmm4 ;tenemos ARGB en dword en xmm2
