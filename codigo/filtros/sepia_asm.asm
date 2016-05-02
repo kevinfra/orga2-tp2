@@ -24,8 +24,9 @@ sepia_asm:
 	push r12
 	xor rbx, rbx
 	xor r12, r12
-	pxor xmm15, xmm15
-	pxor xmm14, xmm14
+	movdqu xmm10, [canalRojo]
+	movdqu xmm11, [canalVerde]
+	movdqu xmm12, [canalAzul]
 	
 	.forFilas:
 		cmp rbx, rcx
@@ -36,22 +37,9 @@ sepia_asm:
 			jge .avanzarFila
 
 			.cargar4pixelsEnXmm1:
-				pxor xmm2, xmm2
 				pxor xmm3, xmm3
-				pxor xmm4, xmm4
-				pxor xmm5, xmm5
-				pxor xmm6, xmm6
-				pxor xmm7, xmm7
-				pxor xmm8, xmm8
-				pxor xmm9, xmm9
-				pxor xmm11, xmm11
-				pxor xmm12, xmm12
-				pxor xmm13, xmm13
-				pxor xmm14, xmm14
-				pxor xmm15, xmm15
-				movups xmm0, [rdi] ;ahora guardo una copia de lo que voy a modificar. xmm0 = |p0a|p0r|p0g|p0b|···|p3a|p3r|p3g|p3b| byte
-				movups xmm2, xmm0 ; carga los primeros 4 pixels en xmm1
-				movdqu xmm5, xmm0
+				movups xmm2, [rdi] ;ahora guardo una copia de lo que voy a modificar. xmm0 = |p0a|p0r|p0g|p0b|···|p3a|p3r|p3g|p3b| byte
+				movdqu xmm5, xmm2
 				punpcklbw xmm2, xmm3 ;expando el byte de cada canal a word en parte baja (2 a 3 pixel)xmm2 = |0 p2a | 0 p2r | 0 p2g | 0 p2b | 0 p3a | 0 p3r | 0 p3g | 0 p3b |
 				punpckhbw xmm5, xmm3 ;expando el byte de cada canal a word de la parte alta (pixels 0 y 1)
 				
@@ -88,17 +76,10 @@ sepia_asm:
 				cvtdq2ps xmm8, xmm4
 				cvtdq2ps xmm9, xmm3
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
-			
-;				pxor xmm6, xmm6
-;				movdqu xmm4, xmm2
-;				punpcklwd xmm4, xmm6 ;tengo en la ultima dword de xmm6 a p3a
-;				psrldq xmm4, 12d ;tengo en la dword mas baja de xmm6 a p3a
-;				cvtdq2ps xmm3, xmm4
-				
-;				shufps xmm7, xmm3, 01000100b ; xmm7 = | 0 |p3a| 0 |p3r|
+				mulps xmm7, xmm10
+				mulps xmm8, xmm11
+				mulps xmm9, xmm12
+
 				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p3g| 0 |p3b|
 				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b|
 				cvtps2dq xmm15, xmm9
@@ -106,13 +87,7 @@ sepia_asm:
 				;tengo libres xmm3, xmm4, xmm6 ->
 				
 				;tengo en xmm2 los pixels 2 y 3. 3 está listo, así que repito lo anterior con xmm2 parte alta
-				pxor xmm3, xmm3
-				pxor xmm4, xmm4
-				pxor xmm6, xmm6
-				pxor xmm7, xmm7
-				pxor xmm8, xmm8
-				pxor xmm9, xmm9
-				
+
 				.pixel2:
 				pxor xmm4, xmm4
 				movdqu xmm3, xmm2
@@ -125,17 +100,10 @@ sepia_asm:
 				cvtdq2ps xmm8, xmm4
 				cvtdq2ps xmm9, xmm3
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
+				mulps xmm7, xmm10
+				mulps xmm8, xmm11
+				mulps xmm9, xmm12
 				
-;				movdqu xmm6, xmm2
-;				pxor xmm2, xmm2
-;				punpckhwd xmm6, xmm2 ;tengo en la ultima dword de xmm7 a p2a
-;				psrlq xmm6, 12d;tengo en la dword mas baja de xmm6 a p2a
-;				cvtdq2ps xmm3, xmm6
-				
-;				shufps xmm7, xmm3, 01000100b ; xmm3 = | 0 |p2a| 0 |p2r|
 				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p2g| 0 |p2b|
 				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b|
 				
@@ -148,16 +116,8 @@ sepia_asm:
 				
 				
 				;ahora hay que repetir el paso anterior con la parte alta de xmm1
-				pxor xmm15, xmm15
-				pxor xmm9, xmm9
-				pxor xmm8, xmm8
-				pxor xmm7, xmm7
-				pxor xmm6, xmm6
-				pxor xmm4, xmm4
-				pxor xmm3, xmm3
-				pxor xmm2, xmm2
-				
-				;al principio tenia los pixeles p1 y p0 en xmm5 en word. Lo muevo a xmm2 por comodidad.
+
+			;al principio tenia los pixeles p1 y p0 en xmm5 en word. Lo muevo a xmm2 por comodidad.
 				movdqu xmm2, xmm5
 				.pixel1:
 				pxor xmm4, xmm4
@@ -171,15 +131,10 @@ sepia_asm:
 				cvtdq2ps xmm8, xmm4
 				cvtdq2ps xmm9, xmm3
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
+				mulps xmm7, xmm10
+				mulps xmm8, xmm11
+				mulps xmm9, xmm12
 				
-;				punpcklwd xmm6, xmm2 ;tengo en la ultima dword de xmm7 a p1a
-;				psrld xmm6, 12d ;tengo en la dword mas baja de xmm6 a p1a
-;				cvtdq2ps xmm3, xmm6
-				
-;				shufps xmm7, xmm3, 01000100b ; xmm7 = | 0 |p1a| 0 |p1r|
 				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p1g| 0 |p1b|
 				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b|
 				cvtps2dq xmm3, xmm9
@@ -189,12 +144,6 @@ sepia_asm:
 				;tengo libres xmm3, xmm4, xmm6 ->
 				
 				;tengo en xmm2 los pixels 2 y 3. 3 está listo, así que repito lo anterior con xmm2 parte alta
-				pxor xmm3, xmm3
-				pxor xmm4, xmm4
-				pxor xmm6, xmm6
-				pxor xmm7, xmm7
-				pxor xmm8, xmm8
-				pxor xmm9, xmm9
 				
 				.pixel0:
 				pxor xmm4, xmm4
@@ -208,15 +157,10 @@ sepia_asm:
 				cvtdq2ps xmm8, xmm4
 				cvtdq2ps xmm9, xmm3
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
+				mulps xmm7, xmm10
+				mulps xmm8, xmm11
+				mulps xmm9, xmm12
 				
-;				punpckhwd xmm6, xmm2 ;tengo en la ultima dword de xmm7 a p0a
-;				psrld xmm6, 12d ;tengo en la dword mas baja de xmm6 a p0a
-;				cvtdq2ps xmm3, xmm6
-				
-;				shufps xmm7, xmm3, 01000100b ; xmm3 = | 0 |p0a| 0 |p0r|
 				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p0g| 0 |p0b|
 				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b| 
 				
