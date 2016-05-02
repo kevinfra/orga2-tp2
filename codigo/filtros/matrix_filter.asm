@@ -3,9 +3,10 @@ DEFAULT REL
 
 %define null 0
 %define tam4pixels 16
-canalRojo: dd 0.5, 0, 0, 1.0
+canalRojo: dd 0.5, 0, 0, 0
 canalVerde: dd 0.3, 0, 0, 0
 canalAzul: dd 0.2, 0, 0, 0
+
 
 section .text
 global sepia_asm
@@ -26,6 +27,7 @@ sepia_asm:
 	xor r12, r12
 	pxor xmm15, xmm15
 	pxor xmm14, xmm14
+	pxor xmm0, xmm0
 	
 	.forFilas:
 		cmp rbx, rcx
@@ -83,26 +85,23 @@ sepia_asm:
 				movdqu xmm4, xmm3
 				movdqu xmm6, xmm3
 						;dejo copiado xmm3 en xmm4 y xmm6, para hacer la multiplicacion por 5, 3 y 2 y luego 
-						
-				cvtdq2ps xmm7, xmm6
-				cvtdq2ps xmm8, xmm4
-				cvtdq2ps xmm9, xmm3
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
-			
-;				pxor xmm6, xmm6
-;				movdqu xmm4, xmm2
-;				punpcklwd xmm4, xmm6 ;tengo en la ultima dword de xmm6 a p3a
-;				psrldq xmm4, 12d ;tengo en la dword mas baja de xmm6 a p3a
-;				cvtdq2ps xmm3, xmm4
+				pmuludq xmm6, [canalRojo]
+				pmuludq xmm4, [canalVerde]
+				pmuludq xmm3, [canalAzul]
 				
-;				shufps xmm7, xmm3, 01000100b ; xmm7 = | 0 |p3a| 0 |p3r|
-				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p3g| 0 |p3b|
-				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b|
-				cvtps2dq xmm15, xmm9
+				pxor xmm7, xmm7
+				pxor xmm11, xmm11
+				movdqu xmm7, xmm2
+				punpcklwd xmm7, xmm11 ;tengo en la ultima dword de xmm6 a p3a
+				psrldq xmm7, 12d ;tengo en la dword mas baja de xmm6 a p3a
+				
+				shufps xmm6, xmm7, 01000100b ; xmm6 = | 0 |p3a| 0 |p3r|
+				shufps xmm3, xmm4, 01000100b ; xmm3 = | 0 |p3g| 0 |p3b|
+				shufps xmm3, xmm6, 10001000b ; xmm3 = |a|r|g|b|
 
+				movdqu xmm15, xmm3 ;muevo xmm3 a xmm15 para dejar libre xmm3
+				
 				;tengo libres xmm3, xmm4, xmm6 ->
 				
 				;tengo en xmm2 los pixels 2 y 3. 3 está listo, así que repito lo anterior con xmm2 parte alta
@@ -121,25 +120,21 @@ sepia_asm:
 				movdqu xmm6, xmm3
 						;dejo copiado xmm3 en xmm4 y xmm6, para hacer la multiplicacion por 5, 3 y 2 y luego 
 				
-				cvtdq2ps xmm7, xmm6 ;convierto sumaRGB dword a single floating point
-				cvtdq2ps xmm8, xmm4
-				cvtdq2ps xmm9, xmm3
+				pmuludq xmm6, [canalRojo]
+				pmuludq xmm4, [canalVerde]
+				pmuludq xmm3, [canalAzul]
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
+				pxor xmm7, xmm7
+				pxor xmm11, xmm11
+				movdqu xmm7, xmm2
+				punpckhwd xmm7, xmm11 ;tengo en la ultima dword de xmm7 a p2a
+				psrld xmm7, 12d;tengo en la dword mas baja de xmm6 a p2a
 				
-;				movdqu xmm6, xmm2
-;				pxor xmm2, xmm2
-;				punpckhwd xmm6, xmm2 ;tengo en la ultima dword de xmm7 a p2a
-;				psrlq xmm6, 12d;tengo en la dword mas baja de xmm6 a p2a
-;				cvtdq2ps xmm3, xmm6
+				shufps xmm6, xmm7, 01000100b ; xmm6 = | 0 |p2a| 0 |p2r|
+				shufps xmm3, xmm4, 01000100b ; xmm3 = | 0 |p2g| 0 |p2b|
+				shufps xmm3, xmm6, 10001000b ; xmm3 = |a|r|g|b|
 				
-;				shufps xmm7, xmm3, 01000100b ; xmm3 = | 0 |p2a| 0 |p2r|
-				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p2g| 0 |p2b|
-				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b|
-				
-				cvtps2dq xmm14, xmm9 ;|a|r|g|b|
+				movdqu xmm14, xmm3  ;en xmm14 esta argb de pixel 2
 				
 				.empaquetarP2P3:
 				;tengo en xmm15 p3 listo y en xmm14 p2 listo empaquetado como dword. Los junto ambos para volver a tener todo listo en xmm2
@@ -167,22 +162,19 @@ sepia_asm:
 				movdqu xmm6, xmm3
 						;dejo copiado xmm3 en xmm4 y xmm6, para hacer la multiplicacion por 5, 3 y 2 y luego 
 				
-				cvtdq2ps xmm7, xmm6 ;convierto sumaRGB dword a single floating point
-				cvtdq2ps xmm8, xmm4
-				cvtdq2ps xmm9, xmm3
+				pmuludq xmm6, [canalRojo]
+				pmuludq xmm4, [canalVerde]
+				pmuludq xmm3, [canalAzul]
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
+				pxor xmm7, xmm7
+				pxor xmm11, xmm11
+				movdqu xmm7, xmm2
+				punpcklwd xmm7, xmm11 ;tengo en la ultima dword de xmm7 a p1a
+				psrld xmm7, 12d ;tengo en la dword mas baja de xmm6 a p1a
 				
-;				punpcklwd xmm6, xmm2 ;tengo en la ultima dword de xmm7 a p1a
-;				psrld xmm6, 12d ;tengo en la dword mas baja de xmm6 a p1a
-;				cvtdq2ps xmm3, xmm6
-				
-;				shufps xmm7, xmm3, 01000100b ; xmm7 = | 0 |p1a| 0 |p1r|
-				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p1g| 0 |p1b|
-				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b|
-				cvtps2dq xmm3, xmm9
+				shufps xmm6, xmm7, 01000100b ; xmm7 = | 0 |p1a| 0 |p1r|
+				shufps xmm3, xmm4, 01000100b ; xmm9 = | 0 |p1g| 0 |p1b|
+				shufps xmm3, xmm6, 10001000b ; xmm9 = |a|r|g|b|
 
 				movdqu xmm15, xmm3 ;muevo xmm3 a xmm15 para dejar libre xmm3
 				;tengo en xmm15 |a|r|g|b| de pixel1
@@ -204,23 +196,20 @@ sepia_asm:
 				movdqu xmm6, xmm3
 						;dejo copiado xmm3 en xmm4 y xmm6, para hacer la multiplicacion por 5, 3 y 2 y luego 
 				
-				cvtdq2ps xmm7, xmm6 ;convierto sumaRGB dword a single floating point
-				cvtdq2ps xmm8, xmm4
-				cvtdq2ps xmm9, xmm3
+				pmuludq xmm6, [canalRojo]
+				pmuludq xmm4, [canalVerde]
+				pmuludq xmm3, [canalAzul]
 				
-				mulps xmm7, [canalRojo]
-				mulps xmm8, [canalVerde]
-				mulps xmm9, [canalAzul]
+				pxor xmm7, xmm7
+				pxor xmm11, xmm11
+				movdqu xmm7, xmm2
+				punpckhwd xmm7, xmm11 ;tengo en la ultima dword de xmm7 a p0a
+				psrld xmm7, 12d ;tengo en la dword mas baja de xmm6 a p0a
 				
-;				punpckhwd xmm6, xmm2 ;tengo en la ultima dword de xmm7 a p0a
-;				psrld xmm6, 12d ;tengo en la dword mas baja de xmm6 a p0a
-;				cvtdq2ps xmm3, xmm6
-				
-;				shufps xmm7, xmm3, 01000100b ; xmm3 = | 0 |p0a| 0 |p0r|
+				shufps xmm7, xmm3, 01000100b ; xmm3 = | 0 |p0a| 0 |p0r|
 				shufps xmm9, xmm8, 01000100b ; xmm9 = | 0 |p0g| 0 |p0b|
-				shufps xmm9, xmm7, 11001000b ; xmm9 = |a|r|g|b| 
+				shufps xmm9, xmm7, 10001000b ; xmm9 = |a|r|g|b| 
 				
-				cvtps2dq xmm3, xmm9 ;|a|r|g|b|
 				movdqu xmm13, xmm3
 				
 				.empaquetarP0P1:
