@@ -1,2 +1,8 @@
 *.out
 *.o
+codigo/build/
+codigo/tests/
+.vscode/
+codigo/graficarFunciones.py
+codigo/scripteando.sh
+*torreStark*
