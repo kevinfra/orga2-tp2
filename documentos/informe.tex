@@ -251,7 +251,10 @@ se puede observar la diferencia de tiempo de cada implementación en ciclos de r
     \end{floatrow}
 \end{figure}
 
-Podemos Observar de este experimento que la implementación en C es....
+Podemos bbservar de este experimento que la implementación en C es que si bien está basada en la misma idea que la implementación en ASM,
+el código generado por el compilador hace que tome mucho más tiempo resolver cada aplicación del filtro hasta el punto de crecer linealmente
+respecto del tamaño de la imágen. Podemos entender esto como una muestra de la diferencia en capacidad de procesamiento de los procesadores que utilizan
+la tecnología SSE contra los que no la utilizan o tienen.
 
 \begin{figure}[!ht]
     \centering
@@ -262,6 +265,8 @@ Podemos Observar de este experimento que la implementación en C es....
     \end{floatrow}
 \end{figure}
 
+En este segundo experimento, comparamos la misma implementación C que el caso anterior pero esta vez compilado con el flag O3, 
+el cual permite compilar el código utilizando tecnología SSE...
 
 \subsubsection{Sepia}
 
