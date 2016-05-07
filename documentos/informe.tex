@@ -248,12 +248,12 @@ se puede observar la diferencia de tiempo de cada implementación en ciclos de r
     \centering
     \begin{floatrow}
       \ffigbox[\FBwidth]{\caption{Comparación C sin optimizar vs ASM}}{%
-        \includegraphics[scale=.25]{./imagenes/cropflip-asmVSc.jpg}   
+        \includegraphics[scale=.25]{./imagenes/cropflip-asmVSc.jpeg}   
       }
     \end{floatrow}
 \end{figure}
 
-Podemos bbservar de este experimento que la implementación en C es que si bien está basada en la misma idea que la implementación en ASM,
+Podemos observar de este experimento que la implementación en C es que si bien está basada en la misma idea que la implementación en ASM,
 el código generado por el compilador hace que tome mucho más tiempo resolver cada aplicación del filtro hasta el punto de crecer linealmente
 respecto del tamaño de la imágen. Podemos entender esto como una muestra de la diferencia en capacidad de procesamiento de los procesadores que utilizan
 la tecnología SSE contra los que no la utilizan o tienen.
@@ -262,13 +262,16 @@ la tecnología SSE contra los que no la utilizan o tienen.
     \centering
     \begin{floatrow}
       \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
-        \includegraphics[scale=.25]{./imagenes/cropflip-asmVScO3.jpg}   
+        \includegraphics[scale=.25]{./imagenes/cropflip-asmVScO3.jpeg}   
       }
     \end{floatrow}
 \end{figure}
 
 En este segundo experimento, comparamos la misma implementación C que el caso anterior pero esta vez compilado con el flag O3, 
-el cual permite compilar el código utilizando tecnología SSE...
+el cual permite compilar el código utilizando tecnología SSE. Si bien se puede observar una amplia mejora respecto de la versión
+sin el flag O3, aún se nota mucha diferencia en comparación con la versión de ASM.
+\newline
+
 
 \subsubsection{Sepia}
 
