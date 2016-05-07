@@ -213,13 +213,16 @@ Ejemplo: ldr bob.bmp 100
 Nosotros tenemos como hipótesis que dadas las herramientas que nos ofrece la tecnología SSE, y que nosotros mismos somos los que nos
 ocupamos de hacer una buena implementación en cada lenguaje, los algoritmos hechos en lenjuage ensamblador será mucho más rápido
 que los que están hechos en lenguaje C. Sabemos que parte del retraso que tiene el lenguaje C se debe a que es el compilador quien decidirá cómo
-optimizar el algoritmo implementado; esto es, traducir a código de máquina según la interpretación que le de el copmilador al código C.
+optimizar el algoritmo implementado; esto es, traducir a código de máquina según la interpretación que le de el copmilador al código C. Es por esto 
+que usaremos el flag O3 como caso de compilación extra, y así poder comparar distintos métodos de compilación sobre una misma 
+implementación del lenguaje C.
 En cambio, para el caso del lenjuage ensamblador, es simplemente traducir a código de máquina, ya que son directamente las instrucciones
 que el procesador deberá ejecutar.
 \newline
-Para poder comparar cada implementación de los filtros, se ejecutan reiteradas veces en imagenes de distintos tamaños.
+Para poder comparar cada implementación de los filtros, los mismos se ejecután reiteradas veces en imagenes de distintos tamaños.
 De cada ejecución, tomaremos el tiempo del clock antes de correr el programa y después de correrlo, y además observaremos
-la cantidad de ciclos de reloj que toma cada vez. 
+la cantidad de ciclos de reloj que toma cada vez. Si bien esto puede traer problemas como por ejemplo el tema de los \textit{outliers},
+por razones de probabilidad y estadística, un promedio de cantidades grandes se acercará más a un promedio real.
 
 \subsection{Implementación y Análisis}
 
@@ -233,8 +236,32 @@ en la posición correspondiente para ese pixel en la nueva imagen.
 Para este filtro, los tests que se realizados consideraron distintos offsets y tamaños de imágenes, además de realizarse sobre imágenes de
 distintos tamaños. 
 \newline
-\textbf{Importante:}
-Falta información sobre análisis y casos de prueba. También falta hacer todo el resto del informe.
+Los parámetros utilizados para esta experimentación fueron tamx: 128, tamy: 128, offsetx: i-128, offsety: i-128. Donde \textit{i} es
+el tamaño de un lado de la imagen, que al ser cuadradas y múltiplos de 4, hace que sea indiferente el lado a elegir.
+\newline
+El primer caso de comparación es la implementación en C compilado sin el Flag O3 contra la implementación en ASM. En el siguiente gráfico
+se puede observar la diferencia de tiempo de cada implementación en ciclos de reloj sobre el tamaño de la imagen en pixels.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{floatrow}
+      \ffigbox[\FBwidth]{\caption{Comparación C sin optimizar vs ASM}}{%
+        \includegraphics[scale=.25]{./imagenes/cropflip-asmVSc.jpg}   
+      }
+    \end{floatrow}
+\end{figure}
+
+Podemos Observar de este experimento que la implementación en C es....
+
+\begin{figure}[!ht]
+    \centering
+    \begin{floatrow}
+      \ffigbox[\FBwidth]{\caption{Comparación C sin optimizar vs ASM}}{%
+        \includegraphics[scale=.25]{./imagenes/cropflip-asmVSc.jpg}   
+      }
+    \end{floatrow}
+\end{figure}
+
 
 \subsubsection{Sepia}
 

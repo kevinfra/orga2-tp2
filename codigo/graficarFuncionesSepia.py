@@ -105,7 +105,7 @@ fig = plt.figure()
 fig.patch.set_facecolor('white')
 ax1 = fig.add_subplot(111)
 pylab.plot(x,y,'r', label= 'Ensamblador')
-pylab.plot(w,z,c='b', label = 'C')
+pylab.plot(w,z,'b', label = 'C')
 #pylab.plot(d,e,c='r', label= 'Co3')
 
 #pylab.plot((a),(b), c='r', label ='f(X)=1024x')
