@@ -238,6 +238,8 @@ distintos tamaños.
 \newline
 Los parámetros utilizados para esta experimentación fueron tamx: 128, tamy: 128, offsetx: i-128, offsety: i-128. Donde \textit{i} es
 el tamaño de un lado de la imagen, que al ser cuadradas y múltiplos de 4, hace que sea indiferente el lado a elegir.
+Este Offset permite tener en cuenta el desplazamiento que debe realizarse para empezar a copiar la imagen, el cual es hasta el último
+bloque de 128x128 de la imagen original.
 \newline
 El primer caso de comparación es la implementación en C compilado sin el Flag O3 contra la implementación en ASM. En el siguiente gráfico
 se puede observar la diferencia de tiempo de cada implementación en ciclos de reloj sobre el tamaño de la imagen en pixels.
@@ -259,8 +261,8 @@ la tecnología SSE contra los que no la utilizan o tienen.
 \begin{figure}[!ht]
     \centering
     \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C sin optimizar vs ASM}}{%
-        \includegraphics[scale=.25]{./imagenes/cropflip-asmVSc.jpg}   
+      \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
+        \includegraphics[scale=.25]{./imagenes/cropflip-asmVScO3.jpg}   
       }
     \end{floatrow}
 \end{figure}
