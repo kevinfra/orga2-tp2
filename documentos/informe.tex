@@ -155,7 +155,7 @@ en la imagen final.
 
 \subsection{Sepia}
 El filtro sepia, es el conocido filtro de imagenes que simula una foto antigüa. Para lograr este efecto, lo que se hace es una suma
-de los canales de color (R, G, B. Llamaremos a esta suma "SumaRGB") y luego se multiplica por un valor fijo para cada canal (0.5 para el canal R, 0.3 para el G
+de los canales de color (R, G, B. Llamaremos a esta suma ``SumaRGB'') y luego se multiplica por un valor fijo para cada canal (0.5 para el canal R, 0.3 para el G
 y 0.2 para el canal B). Luego, manteniendo la transparencia en caso de haber, el pixel quedaría conformado por A = A, R = SumaRGB*0.5
 , G = SumaRGB*0.3 y B = SumaRGB*0.2. \newline
 Al igual que en Cropflip, en el caso de C, se trabaja pixel por pixel, mientras que en el caso del lenguaje ensamblador se trabaja un poco diferente:
@@ -181,16 +181,16 @@ Ejemplo: sepia foto.bmp
 
 \subsection{Low Dynamic Range}
 Este filtro, más conocido como LDR, se logra realizando una serie de cálculos en base a los 25-vecinos de cada pixel del interior
-de la imagen (si tomamos "interior" como 2 pixels hacia adentro desde cada borde) y un $\alpha$ pasado por parámetro, el cual puede ser
+de la imagen (si tomamos ``interior'' como 2 pixels hacia adentro desde cada borde) y un $\alpha$ pasado por parámetro, el cual puede ser
 un valor entre -255 y 255. Lo que hace es agregar o quitar luminosidad dependiendo de este $\alpha$. El método para lograr este efecto es
 modificar cada canal de color (R,G,B) del pixel a revisar, a través de realizar una suma de los 3 canales de color de los 25-vecinos del pixel a editar (incluyendo el mismo pixel),
-luego se multiplica ese valor por el $\alpha$ y por el valor del canal del pixel en observación. Por último, se divide por un valor "Max",
+luego se multiplica ese valor por el $\alpha$ y por el valor del canal del pixel en observación. Por último, se divide por un valor ``Max'',
 que se da haciendo el cálculo del posible máximo del cálculo anterior (255*25*3*255), se suma el valor del canal antes multiplicado y antes
 de guardarse, se satura a 0 y 255, que es el maximo de cada canal (ya que como el $\alpha$ puede ser negativo, es necesario tomar el caso
 en que quede un número negativo en el canal).
 \newline
 El caso de C es igual a sepia y cropflip: Se analiza pixel por pixel. El caso del lenguaje ensamblador es parecido, ya que no se pueden
-hacer cálculos tan grandes con 4 pixeles al mimso tiempo. Es por esto, que también se analiza pixel por pixel, pero para realizar el
+hacer cálculos tan grandes con 4 pixeles al mismo tiempo. Es por esto, que también se analiza pixel por pixel, pero para realizar el
 cálculo de la suma de los 25 vecinos, las multiplicaciones, la división, suma y saturación, se utilizan instrucciones SSE.
 \newline
 Ejemplo: ldr bob.bmp 100
@@ -211,9 +211,9 @@ Ejemplo: ldr bob.bmp 100
 
 \subsection{Hipótesis y bases}
 Nosotros tenemos como hipótesis que dadas las herramientas que nos ofrece la tecnología SSE, y que nosotros mismos somos los que nos
-ocupamos de hacer una buena implementación en cada lenguaje, los algoritmos hechos en lenjuage ensamblador será mucho más rápido
+ocupamos de hacer una buena implementación en cada lenguaje, los algoritmos hechos en lenjuage ensamblador serán mucho más rápido
 que los que están hechos en lenguaje C. Sabemos que parte del retraso que tiene el lenguaje C se debe a que es el compilador quien decidirá cómo
-optimizar el algoritmo implementado; esto es, traducir a código de máquina según la interpretación que le de el copmilador al código C. Es por esto 
+optimizar el algoritmo implementado; esto es, traducir a código de máquina según la interpretación que le de el compilador al código C. Es por esto 
 que usaremos el flag O3 como caso de compilación extra, y así poder comparar distintos métodos de compilación sobre una misma 
 implementación del lenguaje C.
 En cambio, para el caso del lenjuage ensamblador, es simplemente traducir a código de máquina, ya que son directamente las instrucciones
@@ -230,11 +230,10 @@ por razones de probabilidad y estadística, un promedio de cantidades grandes se
 Como se mencionó en la introducción, el filtro de Cropflip toma, en el caso de C, cada pixel y se copia de memoria a memoria. 
 Sabemos que en la práctica esto solo funciona con un DMA, por lo que depende del compilador decidir cómo hacer las iteraciones para 
 recorrer la imagen original y copiar cada pixel a la nueva posición de memoria.
-Para el caso de ASM, se toma de a 4 pixels y se mueven a un registro XMM. dado que un pixel tiene tamaño de 64 bits y el tamaño
+Para el caso de ASM, se toma de a 4 pixels y se mueven a un registro XMM. dado que un pixel tiene tamaño de 32 bits y el tamaño
 del registro XMM es de 128, hacer esto es posible mediante instrucciones SSE (en este caso, movdqu). Luego lo mueve nuevamente a memoria
 en la posición correspondiente para ese pixel en la nueva imagen. 
-Para este filtro, los tests que se realizados consideraron distintos offsets y tamaños de imágenes, además de realizarse sobre imágenes de
-distintos tamaños. 
+Para este filtro, los tests que se realizaron consideraron distintos offsets y se realizaron sobre imágenes de distintos tamaños.
 \newline
 Los parámetros utilizados para esta experimentación fueron tamx: 128, tamy: 128, offsetx: i-128, offsety: i-128. Donde \textit{i} es
 el tamaño de un lado de la imagen, que al ser cuadradas y múltiplos de 4, hace que sea indiferente el lado a elegir.
@@ -242,7 +241,7 @@ Este Offset permite tener en cuenta el desplazamiento que debe realizarse para e
 bloque de 128x128 de la imagen original.
 \newline
 El primer caso de comparación es la implementación en C compilado sin el Flag O3 contra la implementación en ASM. En el siguiente gráfico
-se puede observar la diferencia de tiempo de cada implementación en ciclos de reloj sobre el tamaño de la imagen en pixels.
+se puede observar la diferencia de tiempo de cada implementación en ciclos de reloj en función del tamaño de la imagen en pixels.
 
 \begin{figure}[!ht]
     \centering
@@ -256,7 +255,7 @@ se puede observar la diferencia de tiempo de cada implementación en ciclos de r
 Podemos observar de este experimento que la implementación en C es que si bien está basada en la misma idea que la implementación en ASM,
 el código generado por el compilador hace que tome mucho más tiempo resolver cada aplicación del filtro hasta el punto de crecer linealmente
 respecto del tamaño de la imágen. Podemos entender esto como una muestra de la diferencia en capacidad de procesamiento de los procesadores que utilizan
-la tecnología SSE contra los que no la utilizan o tienen.
+la tecnología SSE contra los que no la utilizan o no tienen.
 
 \begin{figure}[!ht]
     \centering
@@ -278,9 +277,21 @@ sin el flag O3, aún se nota mucha diferencia en comparación con la versión de
 
 \section{Conclusiones y trabajo futuro}
 
+Como conclusiones generales podemos destacar que los algoritmos implementados
+en código Assembler con el uso de instrucciones SSE de Intel son más óptimos que
+las implementaciones de los algoritmos en C (que se compilaron sin ningún 
+tipo de optimización). Esto se debe principalmente a
+su capacidad de procesar múltiples datos al mismo tiempo, generando un efecto
+de paralelismo en el procesamiento y reduciendo la cantidad de accesos a memoria.
+No obstante, al utilizar flags de optimización en la compilación de los algoritmos
+implemetados en C, la situación cambió en algunos expermientos. Para el caso particular del filtro sepia, resultó ligeramente más óptima en términos de tiempo de ejecución
+la implementación en C, compilada con optimización O3 y para que utilize la tecnología AVX con registros de 256 bits, que la implemtación realizada en Assembler. Esto puede deberse a que al tener registros aún más grandes que los utilizados en Assembler (SSE de 128 bits), el código que generó el compilador permite procesar aún más datos en paralelo. 
+Para el caso de Low Dynamic Range se notó una mejoría significativa usando la misma optimización pero que no alcanzó a igualar o superar al código realizado en Assembler. En el caso de Cropflip, la mejoría no fue significativa.
+Por último, es importante destacar que el tiempo necesario para implementar un filtro en lenguaje Assembler es superior al del necesario para realizarlo en un lenguage de un nivel de abstración un poco más alto como es C. Si bien se observan diferencias significativas en la mayoría de los casos en cuestiones de performance, también conviene tener en cuenta el costo de implementación y analizar en cada caso y contexto de uso si el esfuerzo y tiempo adicional justifican los resultados, ya que como se mencionó antes, se puede obtener un muy buen resultado sólo usando optimizaciones del compilador en C.   
 
+\subsubsection{Trabajo futuro}
 
-
+Como siguientes pasos a realizar para este trabajo se pueden realizar diversas implementaciones de los filtros en el lenguaje Assembler para comparar su performance. Por ejemplo, para el caso de LDR, se podría realizar una implementación que además de trabajar con los 25 vecinos de un pixel con registros de 128 bits paralelamente, también se almacenen en registros de 128 bits las sumas parciales de estos 25 vecinos para que no haya que calcularlas todas nuevamente para el pixel próximo. La idea sería que solamente se tenga que computar lo que cambia, y lo que de alguna manera permanezca igual se puede almacenar. Esto reduciría los accesos a memoria y las operaciones a realizar, lo que supondría una mejora en el tiempo de ejecución que llevaría el filtro. Para el caso de sepia se podría probar con una implementación que en vez de realizar una multiplicación por un número decimal, realice una multiplicación por un entero y división por un entero para cada canal. Consideramos igualmente que esta implementación sería menos óptima en términos de ciclos de clock que la realizada actualmente. Para el caso de Cropflip no hay muchas formas de realizar la copia a memoria de la nueva imagen. Se podría probar con una implementación que recorra la imagen en otro orden o que la copie a memoria en otro orden, pero esto no supondría una diferencia significativa. Se podría usar instrucciones de la tecnología de AVX de Intel en caso de que el procesador lo admita, tanto para este último filtro como para todos. En el caso de usar la tecnología de AVX, todos las implementaciones deberían tener un tiempo de procesamiento menor que las anteriores, ya que con registros de 256 bits y nuevas instrucciones se pueden procesar aún más datos paralelamente.
 
 
 %\begin{codesnippet}
