@@ -294,55 +294,62 @@ Para el caso de los expermientos, se corrieron varios tests sobre imágenes de d
 \newline
 El primer caso de comparación es la implementación en C, sin usar ninguna optimización en la compilación, contra la implementación en ASM.
 
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C sin optimización vs ASM}}{%
-        \includegraphics[scale=.25]{./imagenes/sepia-asmVSc.jpeg}   
-      }
-    \end{floatrow}
-\end{figure}
+%\begin{figure}[!ht]
+%    \centering
+%    \begin{floatrow}
+%      \ffigbox[\FBwidth]{\caption{Comparación C sin optimización vs ASM}}{%
+%        \includegraphics[scale=.25]{./imagenes/sepia-asmVSc.jpeg}   
+%      }
+%    \end{floatrow}
+%\end{figure}
+
+\noindent%
+\begin{minipage}{\linewidth}% to keep image and caption on one page
+\makebox[\linewidth]{%        to center the image
+  \includegraphics[keepaspectratio=true,scale=0.25]{./imagenes/sepia-asmVSc.jpeg}}
+\captionof{figure}{Comparación C sin optimización vs ASM}%\label{visina8}%      only if needed  
+\end{minipage}
+\ \
 
 Se puede observar claramente una relación lineal entre el tamaño de la imágen y el tiempo de procesamiento en ambas implementaciones, lo cual resulta intuitivo debido a los algoritmos utilizados. También se aprecia una brecha entre el tiempo que tomó correr los expermientos en C y Assembler, resaltando que los expermientos en assembler requirieron menos ciclos de clock para procesarse. Esta diferencia era la esperada, debido principalmente a la reducción de accesos a memoria gracias a la utilización de SSE en el código de Assembler. Se compararon las mismas implementaciones pero usando diferentes flags de optimizaciones para que realizara el compilador de C. Los resultados son los que arrojan los siguientes gráficos:
 
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C con flag O3 vs ASM}}{%
-        \includegraphics[scale=.25]{./imagenes/sepia-asmVScO3.jpeg}   
-      }
-    \end{floatrow}
-\end{figure}
+%\begin{figure}[!ht]
+%    \centering
+%    \begin{floatrow}
+%      \ffigbox[\FBwidth]{\caption{Comparación C con flag O3 vs ASM}}{%
+%        \includegraphics[scale=.25]{./imagenes/sepia-asmVScO3.jpeg}   
+%      }
+%    \end{floatrow}
+%\end{figure}
+
+\noindent%
+\begin{minipage}{\linewidth}% to keep image and caption on one page
+\makebox[\linewidth]{%        to center the image
+  \includegraphics[keepaspectratio=true,scale=0.25]{./imagenes/sepia-asmVScO3.jpeg}}
+\captionof{figure}{Comparación C con flag O3 vs ASM}%\label{visina8}%      only if needed  
+\end{minipage}
+\ \
 
 Al utilizar el flag de optimización O3, el código generado por el compilador fue mucho más eficiente. Se observa en el gráfico una notable disminución de los tiempos de ejecución del código realizado en C, el cual casi iguala a la performance del realizado en ASM.
 
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C con flag O3 y mavx vs ASM}}{%
-        \includegraphics[scale=.25]{./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg}   
-      }
-    \end{floatrow}
-\end{figure}
+%\begin{figure}[!ht]
+%    \centering
+%    \begin{floatrow}
+%      \ffigbox[\FBwidth]{\caption{Comparación C con flag O3 y mavx vs ASM}}{%
+%        \includegraphics[scale=.25]{./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg}   
+%      }
+%    \end{floatrow}
+%\end{figure}
+
+\noindent%
+\begin{minipage}{\linewidth}% to keep image and caption on one page
+\makebox[\linewidth]{%        to center the image
+  \includegraphics[keepaspectratio=true,scale=0.25]{./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg}}
+\captionof{figure}{Comparación C con flag O3 y mavx vs ASM}%\label{visina8}%      only if needed  
+\end{minipage}
+\ \
 
 Este fue el resultado más interesante. Al compilar con la opción de AVX, que es una tecnología con nuevas instrucciones y expande los registos de 128 bits a 256 bits, se observa que el código generado por el compilador de C es ligeramente más óptimo en términos de tiempo de procesamiento que el realizado por nosotros en assembler. Era un resultado igualmente esperable, ya que al utilizar registros de 256 bits se reducen aún más los accesos a memoria necesarios para traer y guardar pixeles. La relación lineal entre tamaño de imagen y tiempo de procesamiento se mantiene nuevamente en el experimento.  
-\newline
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 \subsubsection{Low Dynamic Range}
 La idea específica de la implementación de este filtro tanto en C como en Assembler es ver pixel por pixel y realizar los cálculos 
@@ -406,7 +413,6 @@ forma que sin el flag AVX.
 \end{figure}
 
 
-\newpage
 \section{Conclusiones y trabajo futuro}
 
 Como conclusiones generales podemos destacar que los algoritmos implementados
@@ -416,7 +422,7 @@ tipo de optimización). Esto se debe principalmente a
 su capacidad de procesar múltiples datos al mismo tiempo, generando un efecto
 de paralelismo en el procesamiento y reduciendo la cantidad de accesos a memoria.
 No obstante, al utilizar flags de optimización en la compilación de los algoritmos
-implemetados en C, la situación cambió en algunos expermientos. Para el caso particular del filtro sepia, resultó ligeramente más óptima en términos de tiempo de ejecución
+implementados en C, la situación cambió en algunos expermientos. Para el caso particular del filtro sepia, resultó ligeramente más óptima en términos de tiempo de ejecución
 la implementación en C, compilada con optimización O3 y para que utilize la tecnología AVX con registros de 256 bits, que la implemtación realizada en Assembler. Esto puede deberse a que al tener registros aún más grandes que los utilizados en Assembler (SSE de 128 bits), el código que generó el compilador permite procesar aún más datos en paralelo. 
 Para el caso de Low Dynamic Range se notó una mejoría significativa usando la misma optimización pero que no alcanzó a igualar o superar al código realizado en Assembler. En el caso de Cropflip, la mejoría no fue significativa.
 Por último, es importante destacar que el tiempo necesario para implementar un filtro en lenguaje Assembler es superior al del necesario para realizarlo en un lenguage de un nivel de abstración un poco más alto como es C. Si bien se observan diferencias significativas en la mayoría de los casos en cuestiones de performance, también conviene tener en cuenta el costo de implementación y analizar en cada caso y contexto de uso si el esfuerzo y tiempo adicional justifican los resultados, ya que como se mencionó antes, se puede obtener un muy buen resultado sólo usando optimizaciones del compilador en C.   
