@@ -30,6 +30,7 @@
 %\usepackage{wrapfig}
 %\usepackage{listings}
 %\lstset{language=C}
+\usepackage{caption}
 
 % \setcounter{secnumdepth}{2}
 \usepackage{underscore}
@@ -271,10 +272,100 @@ el cual permite compilar el código utilizando tecnología SSE. Si bien se puede
 sin el flag O3, aún se nota mucha diferencia en comparación con la versión de ASM.
 \newline
 
+En el siguiente cuadro comparativo se utilizó también el flag que permite utilizar tecnología AVX, el cual contiene acceso
+a registros de 256-bits. A pesar de esto, no hubo una mejora de rendimiento respecto de la compilación sin el flag AVX.
+\begin{figure}[!ht]
+    \centering
+    \begin{floatrow}
+      \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 y AVX vs ASM}}{%
+        \includegraphics[scale=.25]{./imagenes/cropflip-asmVScO3AVX.jpeg}   
+      }
+    \end{floatrow}
+\end{figure}
+
 
 \subsubsection{Sepia}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{Low Dynamic Range}
+La idea específica de la implementación de este filtro tanto en C como en Assembler es ver pixel por pixel y realizar los cálculos 
+de sus 25-vecinos por separado. Esto se hace de dos formas distintas dependiendo del lenguaje. 
+\newline 
+En el caso de C, primero se realiza la suma de los canales RGB de los 25-vecinos recorriendo pixel por pixel y canal por canal y 
+eso se va guardando en una misma variable de tamaño int.
+Esto hace que por cada pixel y por cada canal, se realice un acceso a memoria. \newline
+Una vez obtenido la suma total, se la multiplica por el $\alpha$ pasado por parámetro. y se guarda en una nueva variable de tamaño Float.
+Luego, esta nueva variable se la multiplica por separado por cada canal RGB del pixel a modificar y se guarda el resultado tres variables más
+de tamaño Float. Después, se realiza la división por "Max", mencionado en la introducción de este informe y se le suma una vez más el canal
+correspondiente a modificar del pixel central, guardando otra vez cada resultado en una nueva variable de tamaño Float. Finalmente, 
+se satura cada variable y se la guarda en cada canal a modificar. Esto se hace una cantidad de veces igual a la cantidad total de pixels 
+que tiene la imagen salvo por 2 líneas de pixeles en cada borde. Para ese caso, lo único que se hace es copiar los pixeles de la imagen original 
+a la imagen destino. \newline
+Para el caso de Assembler, lo que cambia respecto de la implementación C son la cantidad de accesos a memoria. Esto se corrige utilizando la 
+tecnología SSE, con los registros de 128-bits, en los cuales al momento de realizar los cálculos de los 25-vecinos se cargan primero los 4 pixels
+de cada fila y luego el último pixel de cada una. Además se utilizan instrucciones tales como \textit{phaddw} y \textit{paddw}, las cuales
+perimten realizar sumas de datos empaquetados en los registros mencionado. Para el caso de la multiplicación y división, se utilizan las instrucciones
+\textit{pmulld} y \textit{divps}, las cuales también trabajan con datos empaquetados en los registros de 128-bits. Para conservar el canal de 
+transparencia, se utilizan las instrucciones \textit{pextrd}, la cual extrae un Double Word a un registro de 32 bits, y luego \textit{pinsrd}, 
+la cual inserta de un registro de 32 bit un Double Word en un registro de 128 bits. Ambas instrucciones utilizan una máscara que indica cuál 
+es el Double Word que se desea obtener o modificar.
+\newline
+
+En un primer experimento comparamos la implementación en C sin ningún tipo de optimización con la implementación en Assembler. En el gráfico 
+resultante, se puede observar que ambas implementaciones crecen de manera lineal según el tamaño de la imagen. Sin embargo, la implementación en 
+Assembler es aún más rápida que la de C.
+
+\noindent%
+\begin{minipage}{\linewidth}% to keep image and caption on one page
+\makebox[\linewidth]{%        to center the image
+  \includegraphics[keepaspectratio=true,scale=0.25]{./imagenes/ldr-asmVSc.jpeg}}
+\captionof{figure}{Comparación C sin optimización vs ASM}%\label{visina8}%      only if needed  
+\end{minipage}
+\ \
+
+En el segundo experimento, comparamos la implementación C compilando con el flag de optimización O3. A continuación se puede ver el gráfico del mismo:
+\begin{figure}[!ht]
+    \centering
+    \begin{floatrow}
+      \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
+        \includegraphics[scale=.25]{./imagenes/ldr-asmVScO3.jpeg}   
+      }
+    \end{floatrow}
+\end{figure}
+Podemos analizar en este caso que el flag O3 realmente cambia el rendimiento de la implementación. Si bien ya no es tán lineal como lo era en el
+experimento anterior, ahora se acerca mucho al performance de la implementación en Assembler.
+\newline
+Como último experimento, agregamos el flag que permite utilizar los registros de 256 bits. Esta vez, se asemeja mucho al experimento anterior, pero
+sigue siento un poco más rápido. El crecimiento de la cantidad de ciclos de procesador que toma, crece respecto del tamaño de la imagen de la misma
+forma que sin el flag AVX.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{floatrow}
+      \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
+        \includegraphics[scale=.25]{./imagenes/ldr-asmVScO3AVX.jpeg}   
+      }
+    \end{floatrow}
+\end{figure}
+
+
+\newpage
 \section{Conclusiones y trabajo futuro}
 
 Como conclusiones generales podemos destacar que los algoritmos implementados
