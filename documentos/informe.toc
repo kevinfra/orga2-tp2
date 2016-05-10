@@ -8,6 +8,5 @@
 \contentsline {subsection}{\numberline {2.2}Implementaci\IeC {\'o}n y An\IeC {\'a}lisis}{4}
 \contentsline {subsubsection}{\numberline {2.2.1}Cropflip}{4}
 \contentsline {subsubsection}{\numberline {2.2.2}Sepia}{6}
-\contentsline {subsubsection}{\numberline {2.2.3}Low Dynamic Range}{6}
-\contentsline {section}{\numberline {3}Conclusiones y trabajo futuro}{8}
-\contentsline {subsubsection}{\numberline {3.0.4}Trabajo futuro}{8}
+\contentsline {subsubsection}{\numberline {2.2.3}Low Dynamic Range}{7}
+\contentsline {section}{\numberline {3}Conclusiones y trabajo futuro}{9}

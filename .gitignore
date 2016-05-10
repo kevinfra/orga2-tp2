@@ -3,5 +3,7 @@
 codigo/build/
 codigo/tests/
 .vscode/
-codigo/graficarFunciones.py
 *torreStark*
+informe.aux
+informe.log
+informe.toc

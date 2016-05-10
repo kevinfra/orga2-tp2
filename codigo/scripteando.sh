@@ -4,8 +4,9 @@ imp_cropflip="asm c"
 filtros="all"
 
 
-while getopts 'hf:' opt; do
+while getopts 'chf:' opt; do
 	case $opt in
+		c) filtros="none" ;;
 		h)	echo ""
 			echo "    Script para generar info de test cases. Se calcula la cantidad de ciclos de"
 			echo "    reloj cada 100 ejecuciones por imagen, con hasta 13 imagenes."
@@ -20,7 +21,7 @@ while getopts 'hf:' opt; do
 done
 
 
-make clean 
+make clean
 make
 if [[ $filtros = "sepia" || $filtros == "all" ]]; then
 	rm sepiac
@@ -30,7 +31,7 @@ if [[ $filtros = "sepia" || $filtros == "all" ]]; then
 		printf '%i   ' $(($i*$i)) >> sepiasm
 		./build/tp2 sepia -i asm ./img/bastachicos.${i}x${i}.bmp -t 100 >>sepiasm
 	done
-	 
+
 	for (( i = 128; i < 1700; i=i+128 )); do
     	echo "corriendo filtro sepia c para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> sepiac
@@ -46,7 +47,7 @@ if [[ $filtros = "ldr" || $filtros == "all" ]]; then
 		printf '%i   ' $(($i*$i)) >> ldrasm
 	 	./build/tp2 ldr -i asm ./img/bastachicos.${i}x${i}.bmp 100 -t 100 >>ldrasm
 	done
-	 
+
 	for (( i = 128; i < 1700; i=i+128 )); do
     	echo "corriendo filtro ldr c para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> ldrc
@@ -64,7 +65,7 @@ if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
 		t=$i-128
 		./build/tp2 cropflip -i asm ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropasm
 	done
-	 
+
 	for (( i = 128; i < 1700; i=i+128 )); do
     	echo "corriendo filtro cropflip c para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropc
@@ -73,7 +74,16 @@ if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
 	done
 fi
 rm bastachicos.*
+if [[ $filtros = "none" ]]; then
+	rm sepiac
+	rm sepiasm
+	rm ldrc
+	rm ldrasm
+	rm cropc
+	rm cropasm
+	make clean
+fi
 
 	 	# done
-	  
+
 	  #python GraficarBarras.py Sepia

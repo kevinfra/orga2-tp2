@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2016.5.1)  9 MAY 2016 18:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2016.5.1)  9 MAY 2016 18:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -489,30 +489,33 @@ Style option: `fancybox' v1.4 <2010/05/15> (tvz)
 \f@ncyO@olf=\skip82
 \f@ncyO@orf=\skip83
 )
-(./informe.aux
+(/usr/share/texlive/texmf-dist/tex/latex/parskip/parskip.sty
+Package: parskip 2001/04/09 non-zero parskip adjustments
+) (./informe.aux
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
 )
 \openout1 = `informe.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
-LaTeX Font Info:    ... okay on input line 94.
-LaTeX Font Info:    Try loading font information for OT1+bch on input line 94.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1bch.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Try loading font information for OT1+bch on input line 97.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1bch.fd
 File: ot1bch.fd 2004/10/18 font definitions for OT1/bch.
 )
-LaTeX Info: Redefining \. on input line 94.
-LaTeX Info: Redefining \% on input line 94.
+LaTeX Info: Redefining \. on input line 97.
+LaTeX Info: Redefining \% on input line 97.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -580,34 +583,34 @@ Package caption Info: floatrow package is loaded.
 Package caption Info: float package is loaded.
 Package caption Info: floatrow package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package ragged2e Info: ABD: executing \RaggedRight on input line 94.
+Package ragged2e Info: ABD: executing \RaggedRight on input line 97.
 
 ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 94.
+LaTeX Info: Redefining \selectfont on input line 97.
 
 <imagenes/logodc.jpg, id=1, 215.6055pt x 83.5923pt>
 File: imagenes/logodc.jpg Graphic file (type jpg)
  <use imagenes/logodc.jpg>
-Package pdftex.def Info: imagenes/logodc.jpg used on input line 106.
+Package pdftex.def Info: imagenes/logodc.jpg used on input line 109.
 (pdftex.def)             Requested size: 215.60497pt x 83.59207pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 106.
+(Font)              <7> on input line 109.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 106.
+(Font)              <5> on input line 109.
 
 <imagenes/logouba.jpg, id=2, 225.4824pt x 231.7458pt>
 File: imagenes/logouba.jpg Graphic file (type jpg)
 
 <use imagenes/logouba.jpg>
-Package pdftex.def Info: imagenes/logouba.jpg used on input line 106.
+Package pdftex.def Info: imagenes/logouba.jpg used on input line 109.
 (pdftex.def)             Requested size: 148.81883pt x 152.95268pt.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/b/n' undefined
-(Font)              using `OT1/cmss/m/n' instead on input line 106.
+(Font)              using `OT1/cmss/m/n' instead on input line 109.
 
 
-Overfull \hbox (22.76358pt too wide) in paragraph at lines 106--106
+Overfull \hbox (22.76358pt too wide) in paragraph at lines 109--109
 [][][]  
  []
 
@@ -630,34 +633,34 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: ./imagenes/lena32.jpg Graphic file (type jpg)
 
 <use ./imagenes/lena32.jpg>
-Package pdftex.def Info: ./imagenes/lena32.jpg used on input line 145.
+Package pdftex.def Info: ./imagenes/lena32.jpg used on input line 148.
 (pdftex.def)             Requested size: 96.35976pt x 96.35976pt.
 File: ./imagenes/lena32.jpg Graphic file (type jpg)
  <use ./imagenes/lena32.jpg>
-Package pdftex.def Info: ./imagenes/lena32.jpg used on input line 145.
+Package pdftex.def Info: ./imagenes/lena32.jpg used on input line 148.
 (pdftex.def)             Requested size: 96.35976pt x 96.35976pt.
 File: ./imagenes/lena32.jpg Graphic file (type jpg)
 
 <use ./imagenes/lena32.jpg>
-Package pdftex.def Info: ./imagenes/lena32.jpg used on input line 145.
+Package pdftex.def Info: ./imagenes/lena32.jpg used on input line 148.
 (pdftex.def)             Requested size: 96.35976pt x 96.35976pt.
 
 <./imagenes/lena32-cropflip.jpg, id=16, 121.7179pt x 121.7179pt>
 File: ./imagenes/lena32-cropflip.jpg Graphic file (type jpg)
 
 <use ./imagenes/lena32-cropflip.jpg>
-Package pdftex.def Info: ./imagenes/lena32-cropflip.jpg used on input line 148.
+Package pdftex.def Info: ./imagenes/lena32-cropflip.jpg used on input line 151.
 
 (pdftex.def)             Requested size: 60.8588pt x 60.8588pt.
 File: ./imagenes/lena32-cropflip.jpg Graphic file (type jpg)
  <use ./imagenes/lena32-cropflip.jpg>
-Package pdftex.def Info: ./imagenes/lena32-cropflip.jpg used on input line 148.
+Package pdftex.def Info: ./imagenes/lena32-cropflip.jpg used on input line 151.
 
 (pdftex.def)             Requested size: 60.8588pt x 60.8588pt.
 File: ./imagenes/lena32-cropflip.jpg Graphic file (type jpg)
 
 <use ./imagenes/lena32-cropflip.jpg>
-Package pdftex.def Info: ./imagenes/lena32-cropflip.jpg used on input line 148.
+Package pdftex.def Info: ./imagenes/lena32-cropflip.jpg used on input line 151.
 
 (pdftex.def)             Requested size: 60.8588pt x 60.8588pt.
 
@@ -665,85 +668,85 @@ Package pdftex.def Info: ./imagenes/lena32-cropflip.jpg used on input line 148.
 File: ./imagenes/foto.jpg Graphic file (type jpg)
 
 <use ./imagenes/foto.jpg>
-Package pdftex.def Info: ./imagenes/foto.jpg used on input line 176.
+Package pdftex.def Info: ./imagenes/foto.jpg used on input line 179.
 (pdftex.def)             Requested size: 99.65454pt x 99.65454pt.
 File: ./imagenes/foto.jpg Graphic file (type jpg)
  <use ./imagenes/foto.jpg>
-Package pdftex.def Info: ./imagenes/foto.jpg used on input line 176.
+Package pdftex.def Info: ./imagenes/foto.jpg used on input line 179.
 (pdftex.def)             Requested size: 99.65454pt x 99.65454pt.
 File: ./imagenes/foto.jpg Graphic file (type jpg)
  <use ./imagenes/foto.jpg>
-Package pdftex.def Info: ./imagenes/foto.jpg used on input line 176.
+Package pdftex.def Info: ./imagenes/foto.jpg used on input line 179.
 (pdftex.def)             Requested size: 99.65454pt x 99.65454pt.
 
 <./imagenes/foto-sepia.jpg, id=18, 2491.78816pt x 2491.78816pt>
 File: ./imagenes/foto-sepia.jpg Graphic file (type jpg)
 
 <use ./imagenes/foto-sepia.jpg>
-Package pdftex.def Info: ./imagenes/foto-sepia.jpg used on input line 179.
+Package pdftex.def Info: ./imagenes/foto-sepia.jpg used on input line 182.
 (pdftex.def)             Requested size: 99.65454pt x 99.65454pt.
 File: ./imagenes/foto-sepia.jpg Graphic file (type jpg)
  <use ./imagenes/foto-sepia.jpg>
-Package pdftex.def Info: ./imagenes/foto-sepia.jpg used on input line 179.
+Package pdftex.def Info: ./imagenes/foto-sepia.jpg used on input line 182.
 (pdftex.def)             Requested size: 99.65454pt x 99.65454pt.
 File: ./imagenes/foto-sepia.jpg Graphic file (type jpg)
 
 <use ./imagenes/foto-sepia.jpg>
-Package pdftex.def Info: ./imagenes/foto-sepia.jpg used on input line 179.
+Package pdftex.def Info: ./imagenes/foto-sepia.jpg used on input line 182.
 (pdftex.def)             Requested size: 99.65454pt x 99.65454pt.
-LaTeX Info: Redefining \. on input line 192.
-LaTeX Info: Redefining \% on input line 192.
+LaTeX Info: Redefining \. on input line 195.
+LaTeX Info: Redefining \% on input line 195.
  [3 <./imagenes/lena32.jpg> <./imagenes/lena32-cropflip.jpg> <./imagenes/foto.j
 pg> <./imagenes/foto-sepia.jpg>]
 <./imagenes/bob.jpg, id=22, 373.395pt x 268.75406pt>
 File: ./imagenes/bob.jpg Graphic file (type jpg)
  <use ./imagenes/bob.jpg>
-Package pdftex.def Info: ./imagenes/bob.jpg used on input line 203.
+Package pdftex.def Info: ./imagenes/bob.jpg used on input line 206.
 (pdftex.def)             Requested size: 93.34851pt x 67.18834pt.
 File: ./imagenes/bob.jpg Graphic file (type jpg)
 
 <use ./imagenes/bob.jpg>
-Package pdftex.def Info: ./imagenes/bob.jpg used on input line 203.
+Package pdftex.def Info: ./imagenes/bob.jpg used on input line 206.
 (pdftex.def)             Requested size: 93.34851pt x 67.18834pt.
 File: ./imagenes/bob.jpg Graphic file (type jpg)
  <use ./imagenes/bob.jpg>
-Package pdftex.def Info: ./imagenes/bob.jpg used on input line 203.
+Package pdftex.def Info: ./imagenes/bob.jpg used on input line 206.
 (pdftex.def)             Requested size: 93.34851pt x 67.18834pt.
 
 <./imagenes/bob-ldr.jpg, id=23, 373.395pt x 268.75406pt>
 File: ./imagenes/bob-ldr.jpg Graphic file (type jpg)
 
 <use ./imagenes/bob-ldr.jpg>
-Package pdftex.def Info: ./imagenes/bob-ldr.jpg used on input line 206.
+Package pdftex.def Info: ./imagenes/bob-ldr.jpg used on input line 209.
 (pdftex.def)             Requested size: 93.34851pt x 67.18834pt.
 File: ./imagenes/bob-ldr.jpg Graphic file (type jpg)
  <use ./imagenes/bob-ldr.jpg>
-Package pdftex.def Info: ./imagenes/bob-ldr.jpg used on input line 206.
+Package pdftex.def Info: ./imagenes/bob-ldr.jpg used on input line 209.
 (pdftex.def)             Requested size: 93.34851pt x 67.18834pt.
 File: ./imagenes/bob-ldr.jpg Graphic file (type jpg)
 
 <use ./imagenes/bob-ldr.jpg>
-Package pdftex.def Info: ./imagenes/bob-ldr.jpg used on input line 206.
+Package pdftex.def Info: ./imagenes/bob-ldr.jpg used on input line 209.
 (pdftex.def)             Requested size: 93.34851pt x 67.18834pt.
-LaTeX Info: Redefining \. on input line 238.
-LaTeX Info: Redefining \% on input line 238.
+LaTeX Info: Redefining \. on input line 241.
+LaTeX Info: Redefining \% on input line 241.
  [4 <./imagenes/bob.jpg> <./imagenes/bob-ldr.jpg>]
 <./imagenes/cropflip-asmVSc.jpeg, id=29, 815.045pt x 614.295pt>
 File: ./imagenes/cropflip-asmVSc.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVSc.jpeg>
-Package pdftex.def Info: ./imagenes/cropflip-asmVSc.jpeg used on input line 252
+Package pdftex.def Info: ./imagenes/cropflip-asmVSc.jpeg used on input line 255
 .
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/cropflip-asmVSc.jpeg Graphic file (type jpg)
  <use ./imagenes/cropflip-asmVSc.jpeg>
-Package pdftex.def Info: ./imagenes/cropflip-asmVSc.jpeg used on input line 252
+Package pdftex.def Info: ./imagenes/cropflip-asmVSc.jpeg used on input line 255
 .
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/cropflip-asmVSc.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVSc.jpeg>
-Package pdftex.def Info: ./imagenes/cropflip-asmVSc.jpeg used on input line 252
+Package pdftex.def Info: ./imagenes/cropflip-asmVSc.jpeg used on input line 255
 .
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 
@@ -752,19 +755,19 @@ File: ./imagenes/cropflip-asmVScO3.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVScO3.jpeg>
 Package pdftex.def Info: ./imagenes/cropflip-asmVScO3.jpeg used on input line 2
-66.
+69.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/cropflip-asmVScO3.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVScO3.jpeg>
 Package pdftex.def Info: ./imagenes/cropflip-asmVScO3.jpeg used on input line 2
-66.
+69.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/cropflip-asmVScO3.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVScO3.jpeg>
 Package pdftex.def Info: ./imagenes/cropflip-asmVScO3.jpeg used on input line 2
-66.
+69.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 
 <./imagenes/cropflip-asmVScO3AVX.jpeg, id=31, 815.045pt x 614.295pt>
@@ -772,78 +775,119 @@ File: ./imagenes/cropflip-asmVScO3AVX.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVScO3AVX.jpeg>
 Package pdftex.def Info: ./imagenes/cropflip-asmVScO3AVX.jpeg used on input lin
-e 282.
+e 285.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/cropflip-asmVScO3AVX.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVScO3AVX.jpeg>
 Package pdftex.def Info: ./imagenes/cropflip-asmVScO3AVX.jpeg used on input lin
-e 282.
+e 285.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/cropflip-asmVScO3AVX.jpeg Graphic file (type jpg)
 
 <use ./imagenes/cropflip-asmVScO3AVX.jpeg>
 Package pdftex.def Info: ./imagenes/cropflip-asmVScO3AVX.jpeg used on input lin
-e 282.
+e 285.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
-LaTeX Info: Redefining \. on input line 309.
-LaTeX Info: Redefining \% on input line 309.
+LaTeX Info: Redefining \. on input line 292.
+LaTeX Info: Redefining \% on input line 292.
  [5 <./imagenes/cropflip-asmVSc.jpeg> <./imagenes/cropflip-asmVScO3.jpeg>]
-<./imagenes/ldr-asmVSc.jpeg, id=35, 815.045pt x 614.295pt>
-File: ./imagenes/ldr-asmVSc.jpeg Graphic file (type jpg)
+<./imagenes/sepia-asmVSc.jpeg, id=35, 815.045pt x 614.295pt>
+File: ./imagenes/sepia-asmVSc.jpeg Graphic file (type jpg)
 
-<use ./imagenes/ldr-asmVSc.jpeg>
-Package pdftex.def Info: ./imagenes/ldr-asmVSc.jpeg used on input line 337.
+<use ./imagenes/sepia-asmVSc.jpeg>
+Package pdftex.def Info: ./imagenes/sepia-asmVSc.jpeg used on input line 309.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--341
+Underfull \hbox (badness 10000) in paragraph at lines 306--313
  
  []
 
-LaTeX Info: Redefining \. on input line 341.
-LaTeX Info: Redefining \% on input line 341.
-[6 <./imagenes/cropflip-asmVScO3AVX.jpeg>]
-<./imagenes/ldr-asmVScO3.jpeg, id=39, 815.045pt x 614.295pt>
+LaTeX Info: Redefining \. on input line 315.
+LaTeX Info: Redefining \% on input line 315.
+[6 <./imagenes/cropflip-asmVScO3AVX.jpeg> <./imagenes/sepia-asmVSc.jpeg>]
+<./imagenes/sepia-asmVScO3.jpeg, id=39, 815.045pt x 614.295pt>
+File: ./imagenes/sepia-asmVScO3.jpeg Graphic file (type jpg)
+
+<use ./imagenes/sepia-asmVScO3.jpeg>
+Package pdftex.def Info: ./imagenes/sepia-asmVScO3.jpeg used on input line 328.
+
+(pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 325--332
+ 
+ []
+
+<./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg, id=40, 815.045pt x 614.295pt>
+File: ./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg Graphic file (type jpg)
+
+<use ./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg>
+Package pdftex.def Info: ./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg used on input 
+line 347.
+(pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 344--351
+ 
+ []
+
+LaTeX Info: Redefining \. on input line 367.
+LaTeX Info: Redefining \% on input line 367.
+[7 <./imagenes/sepia-asmVScO3.jpeg> <./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg>]
+<./imagenes/ldr-asmVSc.jpeg, id=45, 815.045pt x 614.295pt>
+File: ./imagenes/ldr-asmVSc.jpeg Graphic file (type jpg)
+
+<use ./imagenes/ldr-asmVSc.jpeg>
+Package pdftex.def Info: ./imagenes/ldr-asmVSc.jpeg used on input line 385.
+(pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 382--389
+ 
+ []
+
+<./imagenes/ldr-asmVScO3.jpeg, id=46, 815.045pt x 614.295pt>
 File: ./imagenes/ldr-asmVScO3.jpeg Graphic file (type jpg)
 
 <use ./imagenes/ldr-asmVScO3.jpeg>
-Package pdftex.def Info: ./imagenes/ldr-asmVScO3.jpeg used on input line 348.
+Package pdftex.def Info: ./imagenes/ldr-asmVScO3.jpeg used on input line 396.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/ldr-asmVScO3.jpeg Graphic file (type jpg)
  <use ./imagenes/ldr-asmVScO3.jpeg>
-Package pdftex.def Info: ./imagenes/ldr-asmVScO3.jpeg used on input line 348.
+Package pdftex.def Info: ./imagenes/ldr-asmVScO3.jpeg used on input line 396.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/ldr-asmVScO3.jpeg Graphic file (type jpg)
 
 <use ./imagenes/ldr-asmVScO3.jpeg>
-Package pdftex.def Info: ./imagenes/ldr-asmVScO3.jpeg used on input line 348.
+Package pdftex.def Info: ./imagenes/ldr-asmVScO3.jpeg used on input line 396.
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 
-<./imagenes/ldr-asmVScO3AVX.jpeg, id=40, 815.045pt x 614.295pt>
+<./imagenes/ldr-asmVScO3AVX.jpeg, id=47, 815.045pt x 614.295pt>
 File: ./imagenes/ldr-asmVScO3AVX.jpeg Graphic file (type jpg)
 
 <use ./imagenes/ldr-asmVScO3AVX.jpeg>
-Package pdftex.def Info: ./imagenes/ldr-asmVScO3AVX.jpeg used on input line 363
+Package pdftex.def Info: ./imagenes/ldr-asmVScO3AVX.jpeg used on input line 411
 .
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/ldr-asmVScO3AVX.jpeg Graphic file (type jpg)
  <use ./imagenes/ldr-asmVScO3AVX.jpeg>
-Package pdftex.def Info: ./imagenes/ldr-asmVScO3AVX.jpeg used on input line 363
+Package pdftex.def Info: ./imagenes/ldr-asmVScO3AVX.jpeg used on input line 411
 .
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
 File: ./imagenes/ldr-asmVScO3AVX.jpeg Graphic file (type jpg)
 
 <use ./imagenes/ldr-asmVScO3AVX.jpeg>
-Package pdftex.def Info: ./imagenes/ldr-asmVScO3AVX.jpeg used on input line 363
+Package pdftex.def Info: ./imagenes/ldr-asmVScO3AVX.jpeg used on input line 411
 .
 (pdftex.def)             Requested size: 203.76074pt x 153.57336pt.
-LaTeX Info: Redefining \. on input line 368.
-LaTeX Info: Redefining \% on input line 368.
- [7 <./imagenes/ldr-asmVSc.jpeg> <./imagenes/ldr-asmVScO3.jpeg> <./imagenes/ldr
--asmVScO3AVX.jpeg>]
-LaTeX Info: Redefining \. on input line 400.
-LaTeX Info: Redefining \% on input line 400.
- [8] (./informe.aux
+LaTeX Info: Redefining \. on input line 413.
+LaTeX Info: Redefining \% on input line 413.
+ [8 <./imagenes/ldr-asmVSc.jpeg> <./imagenes/ldr-asmVScO3.jpeg>]
+LaTeX Info: Redefining \. on input line 432.
+LaTeX Info: Redefining \% on input line 432.
+ [9 <./imagenes/ldr-asmVScO3AVX.jpeg>]
+LaTeX Info: Redefining \. on input line 446.
+LaTeX Info: Redefining \% on input line 446.
+ [10]
+(./informe.aux
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
 )
@@ -852,13 +896,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 5673 strings out of 493309
- 84423 string characters out of 6140104
- 164521 words of memory out of 5000000
- 8999 multiletter control sequences out of 15000+600000
+ 5695 strings out of 493309
+ 85151 string characters out of 6140104
+ 165561 words of memory out of 5000000
+ 9015 multiletter control sequences out of 15000+600000
  24947 words of font info for 43 fonts, out of 8000000 for 9000
  953 hyphenation exceptions out of 8191
- 40i,13n,87p,1811b,614s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,13n,87p,2036b,614s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fon
@@ -866,10 +910,10 @@ ts/type1/bitstrea/charter/bchri8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmtt10.pfb>
-Output written on informe.pdf (8 pages, 4554664 bytes).
+Output written on informe.pdf (10 pages, 4715081 bytes).
 PDF statistics:
- 70 PDF objects out of 1000 (max. 8388607)
- 39 compressed objects within 1 object stream
+ 79 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 86 words of extra memory for PDF output out of 10000 (max. 10000000)
 
