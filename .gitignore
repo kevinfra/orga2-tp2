@@ -1,6 +1,5 @@
 *.out
 *.o
-codigo/build/
 codigo/tests/
 .vscode/
 *torreStark*
