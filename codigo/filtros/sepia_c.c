@@ -1,7 +1,6 @@
 
 #include "../tp2.h"
 
-#define MIN(x,y) ( x < y ? x : y )
 
 void sepia_c    (
     unsigned char *src,
@@ -20,11 +19,9 @@ void sepia_c    (
         {
             bgra_t *p_d = (bgra_t*) &dst_matrix[i][j * 4];
             bgra_t *p_s = (bgra_t*) &src_matrix[i][j * 4];
-			int sumargb = (p_s->r + p_s->g + p_s->b);
-            p_d->r = MIN((int) (0.5*(float) sumargb), 255);
-			p_d->g = MIN((int) (0.3*(float) sumargb), 255);
-			p_d->b = MIN((int) (0.2*(float) sumargb), 255);
-            p_d->a = p_s->a;
+            *p_d = *p_s;
         }
-    }
+    }	//COMPLETAR
 }
+
+
