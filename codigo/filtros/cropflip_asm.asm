@@ -23,16 +23,23 @@ cropflip_asm:
 	push r12
 	push r13
 	push r14
+	push r15
+	sub rsp, 8
+	mov r9d, tamx
+	mov r13d, tamy
+	xor r14, r14
+	mov r14d, offsetx
+	mov r15d, offsety
 
 	xor edx, edx
-	mov edx, offsety ;edx = tamy
-	add edx, tamy ;edx += offsety
+	mov edx, r15d ;edx = tamy
+	add edx, r13d ;edx += offsety
 	sub edx, 1 ; queda edx = tamy+offsety-1
 
 	xor rcx, rcx
 	mov rcx, 4
 	.avanzarOffsetX:
-	add edi, offsetx ; src += offsetx
+	add rdi, r14 ; src += offsetx
 	loop .avanzarOffsetX
 
 	;ahora tengo que avanzar en Y:
@@ -53,10 +60,10 @@ cropflip_asm:
 
 
   .forTamy:
-	cmp edx, tamy ;for edx = 0; edx < tamy; do:
+	cmp edx, r13d ;for edx = 0; edx < tamy; do:
 	je .fin
   .forTamx:
-	cmp ecx, tamx ;for ecx=0; ecx < tamx; do:
+	cmp ecx, r9d ;for ecx=0; ecx < tamx; do:
 	je .avanzarRdx
 	movdqu xmm0, [rdi]
 	movdqu [rsi], xmm0
@@ -66,13 +73,12 @@ cropflip_asm:
 	jmp .forTamx
 
   .avanzarRdx:
-  	xor ecx, ecx
+  xor ecx, ecx
 	add edx, 1
 	sub rdi, r8 ;avanzo hasta la ultima posicion de la fila siguiente
 	.volverAOffsetX:
 	xor r12, r12
 	mov r12d, tamx ;aqui, deberia ser |rdi| = tamx (en posicion)
-;	sub r12d, offsetx
 	sub rdi, r12 ;asi que con restar offsetx, volveria a la ubicacion
 	sub rdi, r12
 	sub rdi, r12
@@ -81,7 +87,9 @@ cropflip_asm:
 	jmp .forTamy
 
   .fin:
-  	pop r14
+	add rsp, 8
+	pop r15
+  pop r14
 	pop r13
 	pop r12
 	pop rbx
