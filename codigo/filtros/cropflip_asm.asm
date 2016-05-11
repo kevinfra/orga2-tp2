@@ -28,20 +28,20 @@ cropflip_asm:
 	mov edx, offsety ;edx = tamy
 	add edx, tamy ;edx += offsety
 	sub edx, 1 ; queda edx = tamy+offsety-1
-	
+
 	xor rcx, rcx
 	mov rcx, 4
 	.avanzarOffsetX:
-	add rdi, offsetx ; src += offsetx
+	add edi, offsetx ; src += offsetx
 	loop .avanzarOffsetX
-	
+
 	;ahora tengo que avanzar en Y:
 	.avanzarOffsetY:
 	cmp edx, 0
 	je .finAvanzar
 	add rdi, r8
 	dec edx
-	jmp .avanzarOffsetY	
+	jmp .avanzarOffsetY
 
 	;tengo rdi apuntando a donde tengo que empezar a copiar.
 	;;hasta aca tengo rdi apuntando al comienzo de la matriz a cropflipear
@@ -50,8 +50,8 @@ cropflip_asm:
 	xor rdx, rdx
 	xor rbx, rbx
 	xor r13, r13
-		
-	
+
+
   .forTamy:
 	cmp edx, tamy ;for edx = 0; edx < tamy; do:
 	je .fin
@@ -64,7 +64,7 @@ cropflip_asm:
 	add rsi, tam4Pixels ;avanzo 4 bytes al siguiente pixel por 4 pixels
 	add rdi, tam4Pixels ;avanzo 4 bytes al siguiente pixel POR 4 PIXELS
 	jmp .forTamx
-	
+
   .avanzarRdx:
   	xor ecx, ecx
 	add edx, 1
@@ -77,9 +77,9 @@ cropflip_asm:
 	sub rdi, r12
 	sub rdi, r12
 	sub rdi, r12
-	
+
 	jmp .forTamy
-	
+
   .fin:
   	pop r14
 	pop r13
