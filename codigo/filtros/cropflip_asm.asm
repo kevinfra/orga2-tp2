@@ -31,6 +31,8 @@ cropflip_asm:
 	mov r14d, offsetx
 	mov r15d, offsety
 
+
+
 	xor edx, edx
 	mov edx, r15d ;edx = tamy
 	add edx, r13d ;edx += offsety
@@ -56,8 +58,6 @@ cropflip_asm:
 	xor rcx, rcx
 	xor rdx, rdx
 	xor rbx, rbx
-	xor r13, r13
-
 
   .forTamy:
 	cmp edx, r13d ;for edx = 0; edx < tamy; do:
@@ -73,12 +73,13 @@ cropflip_asm:
 	jmp .forTamx
 
   .avanzarRdx:
-  xor ecx, ecx
+  	xor ecx, ecx
 	add edx, 1
 	sub rdi, r8 ;avanzo hasta la ultima posicion de la fila siguiente
 	.volverAOffsetX:
 	xor r12, r12
-	mov r12d, tamx ;aqui, deberia ser |rdi| = tamx (en posicion)
+	mov r12d, r9d ;aqui, deberia ser |rdi| = tamx (en posicion)
+;	sub r12d, offsetx
 	sub rdi, r12 ;asi que con restar offsetx, volveria a la ubicacion
 	sub rdi, r12
 	sub rdi, r12
@@ -89,7 +90,7 @@ cropflip_asm:
   .fin:
 	add rsp, 8
 	pop r15
-  pop r14
+	pop r14
 	pop r13
 	pop r12
 	pop rbx
