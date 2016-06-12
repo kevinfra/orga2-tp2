@@ -38,7 +38,7 @@ if [[ $filtros = "sepia" || $filtros == "all" ]]; then
 	for (( i = 128; i < 1700; i=i+128 )); do
     	echo "corriendo filtro sepia asm v2 para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> sepiac
-		./build/tp2 sepia -i c ./img/bastachicos.${i}x${i}.bmp -t 100 >>sepiac
+		./build/tp2 sepia -i asm ./img/bastachicos.${i}x${i}.bmp -t 100 >>sepiac
 	done
 
 	mv filtros/sepia_asm.asm filtros/sepia_asmV2.asm
@@ -59,9 +59,9 @@ if [[ $filtros = "ldr" || $filtros == "all" ]]; then
 	mv filtros/ldr_asmV2.asm filtros/ldr_asm.asm
 
 	for (( i = 128; i < 1700; i=i+128 )); do
-    	echo "corriendo filtro ldr c para una matriz de $i x $i"
+    	echo "corriendo filtro ldr asm V2 para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> ldrc
-		./build/tp2 ldr -i c ./img/bastachicos.${i}x${i}.bmp 100 -t 100 >>ldrc
+		./build/tp2 ldr -i asm ./img/bastachicos.${i}x${i}.bmp 100 -t 100 >>ldrc
 	done
 
 	mv filtros/ldr_asm.asm filtros/ldr_asmV2.asm
@@ -71,27 +71,27 @@ fi
 
 if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
 	rm cropasm
-	rm cropc
+	#rm cropc
 	echo $t
 	for (( i = 128; i < 1700; i=i+128 )); do
-    	echo "corriendo filtro cropflip asm para una matriz de $i x $i"
+    	echo "corriendo filtro cropflip c V1 para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropasm
 		t=$i-128
-		./build/tp2 cropflip -i asm ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropasm
+		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropasm
 	done
 
 	mv filtros/cropflip_c.c filtros/cropflip_cV1.c
 	mv filtros/cropflip_cV2.c filtros/cropflip_c.c
-
-	for (( i = 128; i < 1700; i=i+128 )); do
-    	echo "corriendo filtro cropflip c para una matriz de $i x $i"
-		printf '%i   ' $(($i*$i)) >> cropc
-		t=$i-128
-		./build/tp2 ldr -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropc
-	done
-
-	mv filtros/cropflip_c.c filtros/cropflip_cV2.c
-	mv filtros/cropflip_cV1.c filtros/cropflip_c.c
+	#
+	# for (( i = 128; i < 1700; i=i+128 )); do
+  #   	echo "corriendo filtro cropflip c V2 para una matriz de $i x $i"
+	# 	printf '%i   ' $(($i*$i)) >> cropc
+	# 	t=$i-128
+	# 	./build/tp2 ldr -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropc
+	# done
+	#
+	# mv filtros/cropflip_c.c filtros/cropflip_cV2.c
+	# mv filtros/cropflip_cV1.c filtros/cropflip_c.c
 
 fi
 rm bastachicos.*
