@@ -26,14 +26,14 @@
 
 
 
-#def graphico(formula, x_range, formula2, x_range2):  
-    # x = np.array(x_range)  
+#def graphico(formula, x_range, formula2, x_range2):
+    # x = np.array(x_range)
     # y = eval(formula)
     # w = np.array(x_range2)
     # z = eval(formula2)
     # a=5
     # hola.plot(3,a,'bo')
-    # #plt.plot(x, y)  
+    # #plt.plot(x, y)
     # a=30
     # plt.plot(2,2,'ro')
     # plt.plot(1,10,'go')
@@ -67,7 +67,7 @@
 
 # ax1 = fig.add_subplot(111)
 
-# ax1.set_title("Plot title...")    
+# ax1.set_title("Plot title...")
 # ax1.set_xlabel('your x label..')
 # ax1.set_ylabel('your y label...')
 
@@ -104,13 +104,13 @@ z = [row[1] for row in arrr]
 fig = plt.figure()
 fig.patch.set_facecolor('white')
 ax1 = fig.add_subplot(111)
-pylab.plot(x,y,'r', label= 'Ensamblador')
-pylab.plot(w,z,'b', label = 'C')
+pylab.plot(x,y,'r', label= 'ASM V1')
+pylab.plot(w,z,'b', label = 'ASM V2')
 #pylab.plot(d,e,c='r', label= 'Co3')
 
 #pylab.plot((a),(b), c='r', label ='f(X)=1024x')
 # plt.errorbar(w, z, np.std(desvio))
-ax1.set_title("SEPIA")    
+ax1.set_title("SEPIA")
 ax1.set_xlabel('Cantidad de pixeles de la imagen')
 ax1.set_ylabel('Cantidad de ciclos de Clock')
 ax1.set_yscale('log', basey=4)

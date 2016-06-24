@@ -59,6 +59,9 @@ xor r12,r12
 		pop rdx
 		jge .parteDeIzquierdaYDerechaQueNoCambia
 
+		cmp r12,3 ; me fijo si es la primera columna de la parte de adentro
+		jg .sumarParteDerechaASumaRGB
+
 		.ParteAdentro:
 		xor r13, r13 ; en r13 tenemos el indice de desplazamiento de los vecinos
 		sub r13,r8
@@ -91,14 +94,13 @@ xor r12,r12
 		phaddw xmm2,xmm2
 		phaddw xmm2,xmm2 ;sumamos todos los 4 pixeles y nos queda en cada word la suma de todos los canales
 
-
+		.sumarParteDerechaASumaRGB:
 		xor r13,r13
 		sub r13,r8
 		sub r13,r8
 		add r13,tam1pixel
 		push rcx
 		mov rcx,4
-
 
 		movdqu xmm3, [rdi + r13]
 		punpcklbw xmm3,xmm4
@@ -119,6 +121,8 @@ xor r12,r12
 		phaddw xmm3,xmm3
 
 		paddw xmm2,xmm3 ; aca tenemos en la mas baja word la suma de todos los canales de los 25 pixeles
+
+		movdqu xmm12, xmm2 ;muevo a xmm12 la suma de los 25 pixels para luego restarle la linea vertical más a la izquierda y así poder reutilizarlo la proxima vuelta
 
 		punpcklwd xmm2,xmm4
 		pmulld xmm2, xmm14 ;tenemos en xmm2 en la qword baja sumaRGB*alpha
@@ -142,6 +146,35 @@ xor r12,r12
 		pextrd eax, xmm1, 00000000b
 		mov [rsi], eax
 
+		push rdx
+		sub rdx,3
+		cmp r12,rdx ;me fijo si es la ultima columna de la parte de adentro
+		pop rdx
+		je .avanzarPixel
+
+		.borrarLadoIzquierdo:
+		pxor xmm10, xmm10
+		push rcx
+		mov rcx, 5
+		xor r13,r13
+		sub r13,r8
+		sub r13,r8
+		sub r13,tam2pixel
+
+			.loopearLadoIzquierdoParaBorrar:
+			movdqu xmm11, [rdi + r13]
+			punpcklbw xmm11, xmm4
+			pand xmm11, xmm15 ; borro todo menos el rgb de la parte baja que me interesa. Tengo que sumar horizontal para tener en un word la suma y eso restarlo de xmm12
+			phaddw xmm11, xmm11
+			phaddw xmm11, xmm11 ;ahora tengo |basura|basura|basura|basura||basura|basura|basura|sumaRGBpixelIzquierdo
+			paddw xmm10, xmm11
+			add r13, r8
+			loop .loopearLadoIzquierdoParaBorrar
+			pop rcx
+			psubw xmm12, xmm10 ;resté el lado izquierdo de los 25 pixeles
+			movdqu xmm2, xmm12
+
+		.avanzarPixel:
 		inc r12 ;avanzo al proximo pixel
 		add rdi, tam1pixel ;avanzo al proximo pixel en source
 		add rsi, tam1pixel ;avanzo al proximo pixel en destino

@@ -19,11 +19,11 @@ z = [row[1] for row in arrr]
 fig = plt.figure()
 fig.patch.set_facecolor('white')
 ax1 = fig.add_subplot(111)
-pylab.plot(x,y,'r', label= 'Ensamblador')
-pylab.plot(w,z,c='b', label = 'C')
+pylab.plot(x,y,'r', label= 'C V1')
+pylab.plot(w,z,c='b', label = 'C V2')
 
 
-ax1.set_title("Cropflip")    
+ax1.set_title("Cropflip")
 ax1.set_xlabel('Cantidad de pixeles de la imagen')
 ax1.set_ylabel('Cantidad de ciclos de Clock')
 ax1.set_yscale('log', basey=4)
