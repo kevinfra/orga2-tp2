@@ -7,6 +7,7 @@ section .data
 %define tam4pixel 16
 max: dd 4876875, 4876875, 4876875, 0
 borrarA: dw 0xffff, 0xffff, 0xffff, 0, 0xffff, 0xffff, 0xffff, 0
+borrarParteAlta: dw 0xffff, 0xffff, 0xffff, 0, 0, 0, 0, 0
 section .text
 ;void ldr_asm    (
 	;unsigned char *src,  rdi
@@ -32,25 +33,21 @@ mov r14d, [rbp + 16]
 pinsrd xmm14, r14d, 00000000b ;alpha en la dword mas baja de xmm14
 movdqu xmm0, [max]
 cvtdq2ps xmm13, xmm0 ;dejamos max en xmm13
+movdqu xmm10, [borrarParteAlta]
 
 xor rbx, rbx
 xor r12,r12
 
-.forFilas:
-	cmp rbx, rcx
+.forCols:
+	cmp r12, rdx
 	je .fin
+	push rsi
+	push rdi
 
-	.forCols:
-		cmp r12, rdx
-		jge .avanzarFila
+	.forFilas:
+		cmp rbx, rcx
+		jge .avanzarColumna
 
-		cmp rbx,2 ;me fijo si son las primeras dos filas
-		jl .parteDeArribaYAbajoQueNoCambia
-		push rcx
-		sub rcx,2
-		cmp rbx,rcx ;me fijo si son las ultimas dos filas
-		pop rcx
-		jge .parteDeArribaYAbajoQueNoCambia
 		cmp r12,2 ; me fijo si son las primeras dos columnas
 		jl .parteDeIzquierdaYDerechaQueNoCambia
 		push rdx
@@ -58,9 +55,16 @@ xor r12,r12
 		cmp r12,rdx ;me fijo si son las dos ultimas dos columnas
 		pop rdx
 		jge .parteDeIzquierdaYDerechaQueNoCambia
+		push rcx
+		sub rcx,2
+		cmp rbx,rcx ;me fijo si son las ultimas dos filas
+		pop rcx
+		jge .parteDeArribaYAbajoQueNoCambia
+		cmp rbx,2 ;me fijo si son las primeras dos filas
+		jl .parteDeArribaYAbajoQueNoCambia
 
-		cmp r12,3 ; me fijo si es la primera columna de la parte de adentro
-		jg .sumarParteDerechaASumaRGB
+		cmp rbx,3 ; me fijo si es la primera columna de la parte de adentro
+		jg .teniendoParteAltaBorrada
 
 		.ParteAdentro:
 		xor r13, r13 ; en r13 tenemos el indice de desplazamiento de los vecinos
@@ -70,6 +74,7 @@ xor r12,r12
 		push rcx
 		mov rcx,4
 		movdqu xmm2,[rdi + r13]
+		movdqu xmm11, xmm2 ;guardo xmm2 para despues
 		movdqu xmm3,xmm2
 		pxor xmm4,xmm4
 		punpckhbw xmm2,xmm4
@@ -94,16 +99,20 @@ xor r12,r12
 		phaddw xmm2,xmm2
 		phaddw xmm2,xmm2 ;sumamos todos los 4 pixeles y nos queda en cada word la suma de todos los canales
 
-		.sumarParteDerechaASumaRGB:
+
 		xor r13,r13
 		sub r13,r8
 		sub r13,r8
-		add r13,tam1pixel
+		add r13,tam2pixel
 		push rcx
 		mov rcx,4
 
+
 		movdqu xmm3, [rdi + r13]
 		punpcklbw xmm3,xmm4
+		movdqu xmm9, xmm3 ;guardo el pixel alto
+		pand xmm9, xmm10
+;		packuswb xmm9, xmm4
 		add r13,r8
 
 		.looperIndividual:
@@ -121,8 +130,59 @@ xor r12,r12
 		phaddw xmm3,xmm3
 
 		paddw xmm2,xmm3 ; aca tenemos en la mas baja word la suma de todos los canales de los 25 pixeles
+		movdqu xmm8, xmm2 ;guardo la suma
 
-		movdqu xmm12, xmm2 ;muevo a xmm12 la suma de los 25 pixels para luego restarle la linea vertical más a la izquierda y así poder reutilizarlo la proxima vuelta
+		punpcklwd xmm2,xmm4
+		pmulld xmm2, xmm14 ;tenemos en xmm2 en la qword baja sumaRGB*alpha
+		movdqu xmm1, xmm2
+		movdqu xmm3, xmm2
+		shufps xmm1, xmm2, 11001100b
+		shufps xmm1, xmm3, 11001000b ; xmm1 = |basura|suma|suma|suma|
+		movdqu xmm2, [rdi]
+		punpcklbw xmm2, xmm4
+		punpcklwd xmm2, xmm4 ;tenemos ARGB en dword en xmm2
+		pmulld xmm1, xmm2
+		pxor xmm3, xmm3
+		cvtdq2ps xmm3, xmm1
+		divps xmm3, xmm13
+		cvtps2dq xmm1, xmm3
+		paddd xmm1, xmm2
+		pextrd eax, xmm2, 00000011b ; extraemos el A del pixel en vista
+		pinsrd xmm1, eax, 00000011b ;insertamos el A en el dword mas alto de xmm1
+		packusdw xmm1, xmm4
+		packuswb xmm1, xmm4
+		pextrd eax, xmm1, 00000000b
+		mov [rsi], eax
+		jmp .borrarParteAlta
+
+
+		.teniendoParteAltaBorrada:
+		pxor xmm4, xmm4
+		xor r13, r13
+		add r13, r8
+		add r13, r8
+		sub r13, tam2pixel
+		movdqu xmm2, [rdi + r13]
+		movdqu xmm11, xmm2
+		punpcklbw xmm2, xmm4
+		punpckhbw xmm11, xmm4
+		paddw xmm11, xmm2 ;sumados 4 pixeles por canal.
+		pand xmm11, xmm15
+
+		add r13, tam2pixel
+		add r13, tam2pixel
+		movdqu xmm9, [rdi + r13]
+		punpcklbw xmm9,xmm4
+		pand xmm9, xmm10
+;		packuswb xmm9, xmm4 ;5to pixel
+
+		phaddw xmm11, xmm11
+		phaddw xmm11, xmm11
+		paddw xmm11, xmm9
+		paddw xmm8, xmm11 ;tengo la suma de los 25 pixels.
+		movdqu xmm2, xmm8
+
+		;;;;;;;;;;;;;;;;;;;;;;;;;;;;,
 
 		punpcklwd xmm2,xmm4
 		pmulld xmm2, xmm14 ;tenemos en xmm2 en la qword baja sumaRGB*alpha
@@ -146,63 +206,65 @@ xor r12,r12
 		pextrd eax, xmm1, 00000000b
 		mov [rsi], eax
 
-		push rdx
-		sub rdx,3
-		cmp r12,rdx ;me fijo si es la ultima columna de la parte de adentro
-		pop rdx
-		je .avanzarPixel
+		;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-		.borrarLadoIzquierdo:
-		pxor xmm10, xmm10
-		push rcx
-		mov rcx, 5
-		xor r13,r13
-		sub r13,r8
-		sub r13,r8
-		sub r13,tam2pixel
 
-			.loopearLadoIzquierdoParaBorrar:
-			movdqu xmm11, [rdi + r13]
-			punpcklbw xmm11, xmm4
-			pand xmm11, xmm15 ; borro todo menos el rgb de la parte baja que me interesa. Tengo que sumar horizontal para tener en un word la suma y eso restarlo de xmm12
-			phaddw xmm11, xmm11
-			phaddw xmm11, xmm11 ;ahora tengo |basura|basura|basura|basura||basura|basura|basura|sumaRGBpixelIzquierdo
-			paddw xmm10, xmm11
-			add r13, r8
-			loop .loopearLadoIzquierdoParaBorrar
-			pop rcx
-			psubw xmm12, xmm10 ;resté el lado izquierdo de los 25 pixeles
-			movdqu xmm2, xmm12
+		.recupararPrimeraFila:
+		xor r13, r13
+		sub r13, r8
+		sub r13, r8
+		sub r13, tam2pixel
+		movdqu xmm11, [rdi + r13]
+		add r13, tam2pixel
+		add r13, tam2pixel
+		movdqu xmm9, [rdi + r13]
+		punpcklbw xmm9,xmm4
+		pand xmm9, xmm10
+
+
+		.borrarParteAlta:
+		movdqu xmm7, xmm11 ;en xmm11 estan los 4 pixels de mas arriba
+		punpcklwd xmm7, xmm4
+		punpckhwd xmm11, xmm4
+		paddw xmm11, xmm7
+		phaddw xmm11, xmm11
+		phaddw xmm11, xmm11
+		pand xmm11, xmm10 ;borro parte alta (con A incluido)
+		paddw xmm11, xmm9 ;en xmm9 tengo el 5to pixel de la primera fila
+		psubw xmm8, xmm11 ;en xmm8 tenia la suma25 vieja
 
 		.avanzarPixel:
-		inc r12 ;avanzo al proximo pixel
-		add rdi, tam1pixel ;avanzo al proximo pixel en source
-		add rsi, tam1pixel ;avanzo al proximo pixel en destino
-		jmp .forCols
+		inc rbx ;avanzo al proximo pixel
+		add rdi, r8 ;avanzo al proximo pixel en source
+		add rsi, r8 ;avanzo al proximo pixel en destino
+		jmp .forFilas
 
-	.avanzarFila:
-	xor r12, r12
-	add rbx, 1
-	jmp .forFilas
-
-	.parteDeArribaYAbajoQueNoCambia:
-
-	movdqu xmm1,[rdi] ; me copio a xmm1 4 pixeles
-	movdqu [rsi],xmm1
-	add rdi,tam4pixel
-	add rsi,tam4pixel
-	add r12,4
+	.avanzarColumna:
+	xor rbx, rbx
+	add r12, 1
+	pop rdi
+	pop rsi
+	add rdi, tam1pixel
+	add rsi, tam1pixel
 	jmp .forCols
 
+
+	.parteDeArribaYAbajoQueNoCambia:
+	mov r14d,[rdi] ; me copio a xmm1 4 pixeles
+	mov [rsi],r14d
+	add rdi,r8
+	add rsi,r8
+	add rbx,1
+	jmp .forFilas
 
 
 	.parteDeIzquierdaYDerechaQueNoCambia:
-	mov r14,[rdi]
-	mov [rsi],r14
-	add rdi,tam2pixel
-	add rsi,tam2pixel
-	add r12,2
-	jmp .forCols
+	mov r14d,[rdi]
+	mov [rsi],r14d
+	add rdi,r8
+	add rsi,r8
+	add rbx,1
+	jmp .forFilas
 
 
 
