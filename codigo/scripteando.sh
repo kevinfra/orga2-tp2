@@ -70,7 +70,7 @@ if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
     	echo "corriendo filtro cropflip c para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropc
 		t=$i-128
-		./build/tp2 ldr -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropc
+		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropc
 	done
 fi
 rm bastachicos.*
