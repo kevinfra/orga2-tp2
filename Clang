@@ -1,0 +1,35 @@
+Como instalar Clang y compilar los filtros
+
+Para instalar
+
+sudo apt install clang 
+sudo apt-get install clang
+
+Para Compilar, en el MakeFile de la carpeta filtros agregamos " CC = clang " , arriba de todo 
+y compilamos con el makefile de la principal.Cuando hacemos make deberian aparecer estas lineas
+
+clang -ggdb -Wall -Wextra -std=c99 -pedantic -m64 -c -o ../build/cropflip_c.o cropflip_c.c
+cropflip_c.c:7:6: warning: unused parameter 'cols' [-Wunused-parameter]
+        int cols,
+            ^
+cropflip_c.c:8:6: warning: unused parameter 'filas' [-Wunused-parameter]
+        int filas,
+            ^
+2 warnings generated.
+clang -ggdb -Wall -Wextra -std=c99 -pedantic -m64 -c -o ../build/sepia_c.o sepia_c.c
+clang -ggdb -Wall -Wextra -std=c99 -pedantic -m64 -c -o ../build/ldr_c.o ldr_c.c 
+
+Dejo 2 carpetas con los archivos para generar los graficos con las 6 resultados, capaz habria que ver
+los colores para que se diferencien mejor.
+
+
+Despues, dejo estos comandos para renombrar los resultados del scripteando a los nombres para el all2.py
+GCC
+mv cropc Gcropc
+mv sepiac Gsepiac
+mv ldrc Gldrc
+
+Clang 
+mv cropc Ccropc
+mv sepiac Csepiac
+mv ldrc Cldrc
