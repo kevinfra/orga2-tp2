@@ -7,3 +7,5 @@ codigo/tests/
 informe.aux
 informe.log
 informe.toc
+*tags*
+*.bmp

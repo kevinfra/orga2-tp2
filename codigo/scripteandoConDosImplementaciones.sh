@@ -13,8 +13,10 @@ while getopts 'chf:' opt; do
 			echo ""
 			echo "    Opciones disponibles:"
 			echo "        -h        Imprime este texto de ayuda."
-			echo "        -f <ldr|sepia|cropflip|all>    Filtro a ejecutar (todas por defecto)."
+			echo "        -f <ldr|sepia|cropflip|cropflip3|all>    Filtro a ejecutar (todas por defecto)."
 			echo "        -c 				Limpia todo."
+			echo ""
+			echo "		Cropflip3 ejecuta las 2 versiones de cropflip en c y la version de asm"
 			echo ""
 			exit 0 ;;
 		f) filtros=$OPTARG ;;
@@ -104,6 +106,51 @@ if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
 	mv filtros/cropflip_cV1.c filtros/cropflip_c.c
 
 fi
+
+
+
+if [[ $filtros = "cropflip3" ]]; then
+	rm cropASM1
+	rm cropCv1
+	rm cropCv2
+	echo $t
+	for (( i = 128; i < 1700; i=i+128 )); do
+    	echo "corriendo filtro cropflip c V1 para una matriz de $i x $i"
+		printf '%i   ' $(($i*$i)) >> cropCv1
+		t=$i-128
+		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropCv1
+	done
+
+	mv filtros/cropflip_c.c filtros/cropflip_cV1.c
+	mv filtros/cropflip_cV2.c filtros/cropflip_c.c
+
+	make clean
+	make
+
+	for (( i = 128; i < 1700; i=i+128 )); do
+     	echo "corriendo filtro cropflip c V2 para una matriz de $i x $i"
+	 	printf '%i   ' $(($i*$i)) >> cropCv2
+	 	t=$i-128
+	 	./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropCv2
+	done
+
+	mv filtros/cropflip_c.c filtros/cropflip_cV2.c
+	mv filtros/cropflip_cV1.c filtros/cropflip_c.c
+
+	make clean
+	make
+
+	for (( i = 128; i < 1700; i=i+128 )); do
+		echo "corriendo filtro cropflip ASM para una matriz de $i x $i"
+		printf '%i   ' $(($i*$i)) >> cropASM1
+		t=$i-128
+		./build/tp2 cropflip -i asm ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropASM1
+	done
+
+fi
+
+
+
 rm bastachicos.*
 if [[ $filtros = "none" ]]; then
 	rm sepiac
@@ -112,6 +159,9 @@ if [[ $filtros = "none" ]]; then
 	rm ldrasm
 	rm cropc
 	rm cropasm
+	rm cropASM
+	rm cropCv1
+	rm cropCv2
 	make clean
 fi
 

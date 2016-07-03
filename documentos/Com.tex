@@ -1,18 +1,21 @@
-\section{Compiladores}
-Un compilador no es mas que un programa que basicamente, toma el codigo C 
-y lo traduce a codigo de maquina. Existen varios para C, como ser GCC, Clang y el Compilador de Intel. 
-Lo que hicimos fue compilar los filtros con GCC y clang, teniendo como hipotesis que GCC anda mejor, pues en caso contrario clang vendria instalado por defecto en vez de GCC.
-Las versiones que vamos a utilizar para comparar son 5.3.1 para GCC y 3.8.0 para Clang
-%Lo que vamos a hacer es compilar el codigo con Clang/GCC y ver si encontramos diferencias.Para comparar, se van a usar la version 4.8.4 de GCC y la 3.4 de Clang. 
+\subsection{Comparación entre Compiladores}
+Un compilador no es mas que un programa que basicamente toma el codigo C
+y lo traduce a codigo de maquina. Existen varios para C, tales como como GCC (el cual se usa en gran parte de este trabajo), Clang y el Compilador de Intel.
+Lo que hicimos en este experimento fue compilar los filtros con GCC y Clang en sus versiones 5.3.1 y 3.8.0 respectivamente, para luego realizar la comparación.
+%Lo que vamos a hacer es compilar el codigo con Clang/GCC y ver si encontramos diferencias.Para comparar, se van a usar la version 4.8.4 de GCC y la 3.4 de Clang.
 %Para realizar la comparacion, vamos a compilar el TP con GCC y luego con Clang.
 %Para empezar, vamos a comparar con optimizacion nula
+Nuestra hipótesis para este experimento es que el compilador de GCC optimice más el código producido que Clang, ya que en caso contrario, este último estaría instalado por defecto
+en muchos de los sistemas operativos existentes en lugar de GCC (teniendo en cuenta las muchas otras razones por las que puede no ser el caso).
+
+
 Aqui el grafico de GCC
 
 \begin{figure}[H]
     \centering
     \begin{floatrow}
       \ffigbox[\FBwidth]{\caption{Filtros con GCC -O0}}{%
-        \includegraphics[scale=.50]{./imagenes/GCC0.jpg}   
+        \includegraphics[scale=.50]{./imagenes/GCC0.jpg}
       }
     \end{floatrow}
 \end{figure}
@@ -26,7 +29,7 @@ Aqui el grafico de Clang
     \centering
     \begin{floatrow}
       \ffigbox[\FBwidth]{\caption{Filtros con Clang -O0}}{%
-        \includegraphics[scale=.50]{./imagenes/Clang0.jpg}   
+        \includegraphics[scale=.50]{./imagenes/Clang0.jpg}
       }
     \end{floatrow}
 \end{figure}
@@ -39,7 +42,7 @@ Ahora, vamos a repetir el mismo experimento pero variando las flags, esta vez va
     \centering
     \begin{floatrow}
       \ffigbox[\FBwidth]{\caption{Filtros con GCC -O0}}{%
-        \includegraphics[scale=.50]{./imagenes/GCC3.jpg}   
+        \includegraphics[scale=.50]{./imagenes/GCC3.jpg}
       }
     \end{floatrow}
 \end{figure}
@@ -49,11 +52,9 @@ Ahora, vamos a repetir el mismo experimento pero variando las flags, esta vez va
     \centering
     \begin{floatrow}
       \ffigbox[\FBwidth]{\caption{Filtros con Clang -O0}}{%
-        \includegraphics[scale=.50]{./imagenes/Clang3.jpg}   
+        \includegraphics[scale=.50]{./imagenes/Clang3.jpg}
       }
     \end{floatrow}
 \end{figure}
 
 Efectivamente, se da el comportamiento previsto, en Cropflip gana Clang mientras que en los otros gana GCC
-
-

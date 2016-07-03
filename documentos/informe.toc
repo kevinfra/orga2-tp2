@@ -2,11 +2,15 @@
 \contentsline {section}{\numberline {1}Introduccion}{3}
 \contentsline {subsection}{\numberline {1.1}Cropflip}{3}
 \contentsline {subsection}{\numberline {1.2}Sepia}{3}
-\contentsline {subsection}{\numberline {1.3}Low Dynamic Range}{4}
+\contentsline {subsection}{\numberline {1.3}Low Dynamic Range}{3}
 \contentsline {section}{\numberline {2}Desarrollo}{4}
 \contentsline {subsection}{\numberline {2.1}Hip\IeC {\'o}tesis y bases}{4}
 \contentsline {subsection}{\numberline {2.2}Implementaci\IeC {\'o}n y An\IeC {\'a}lisis}{4}
 \contentsline {subsubsection}{\numberline {2.2.1}Cropflip}{4}
-\contentsline {subsubsection}{\numberline {2.2.2}Sepia}{6}
+\contentsline {subsubsection}{\numberline {2.2.2}Sepia}{5}
 \contentsline {subsubsection}{\numberline {2.2.3}Low Dynamic Range}{7}
-\contentsline {section}{\numberline {3}Conclusiones y trabajo futuro}{9}
+\contentsline {subsection}{\numberline {2.3}Comparaci\IeC {\'o}n con diferentes implementaciones}{9}
+\contentsline {subsubsection}{\numberline {2.3.1}Cropflip C vs Cropflip C}{9}
+\contentsline {subsubsection}{\numberline {2.3.2}Sepia ASM vs Sepia ASM}{10}
+\contentsline {subsection}{\numberline {2.4}Comparaci\IeC {\'o}n entre Compiladores}{11}
+\contentsline {section}{\numberline {3}Conclusiones y trabajo futuro}{13}
