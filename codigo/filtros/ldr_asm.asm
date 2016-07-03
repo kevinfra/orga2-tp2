@@ -63,7 +63,7 @@ xor r12,r12
 		cmp rbx,2 ;me fijo si son las primeras dos filas
 		jl .parteDeArribaYAbajoQueNoCambia
 
-		cmp rbx,3 ; me fijo si es la primera columna de la parte de adentro
+		cmp rbx,3 ; me fijo si es la primera fila de la parte de adentro
 		jg .teniendoParteAltaBorrada
 
 		.ParteAdentro:
@@ -166,7 +166,7 @@ xor r12,r12
 		movdqu xmm11, xmm2
 		punpcklbw xmm2, xmm4
 		punpckhbw xmm11, xmm4
-		paddw xmm11, xmm2 ;sumados 4 pixeles por canal.
+		paddw xmm11, xmm2 ;sumados 2 pixeles con otros 2 pixeles por canal.
 		pand xmm11, xmm15
 
 		add r13, tam2pixel
@@ -224,8 +224,8 @@ xor r12,r12
 
 		.borrarParteAlta:
 		movdqu xmm7, xmm11 ;en xmm11 estan los 4 pixels de mas arriba
-		punpcklwd xmm7, xmm4
-		punpckhwd xmm11, xmm4
+		punpcklbw xmm7, xmm4
+		punpckhbw xmm11, xmm4
 		paddw xmm11, xmm7
 		pand xmm11, xmm15
 		phaddw xmm11, xmm11
