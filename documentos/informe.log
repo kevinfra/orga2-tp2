@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.14)  5 JUL 2016 02:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.14)  5 JUL 2016 08:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1078,50 +1078,50 @@ Package pdftex.def Info: ./imagenes/GCC0.jpg used on input line 19.
 <./imagenes/Clang0.jpg, id=68, 584.0pt x 438.0pt>
 File: ./imagenes/Clang0.jpg Graphic file (type jpg)
  <use ./imagenes/Clang0.jpg>
-Package pdftex.def Info: ./imagenes/Clang0.jpg used on input line 33.
+Package pdftex.def Info: ./imagenes/Clang0.jpg used on input line 34.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
 File: ./imagenes/Clang0.jpg Graphic file (type jpg)
 
 <use ./imagenes/Clang0.jpg>
-Package pdftex.def Info: ./imagenes/Clang0.jpg used on input line 33.
+Package pdftex.def Info: ./imagenes/Clang0.jpg used on input line 34.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
 File: ./imagenes/Clang0.jpg Graphic file (type jpg)
  <use ./imagenes/Clang0.jpg>
-Package pdftex.def Info: ./imagenes/Clang0.jpg used on input line 33.
+Package pdftex.def Info: ./imagenes/Clang0.jpg used on input line 34.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
-LaTeX Info: Redefining \. on input line 36.
-LaTeX Info: Redefining \% on input line 36.
- [13 <./imagenes/GCC0.jpg>] <./imagenes/GCC3.jpg, id=73, 584.0pt x 438.0pt>
+LaTeX Info: Redefining \. on input line 37.
+LaTeX Info: Redefining \% on input line 37.
+ [13 <./imagenes/GCC0.jpg>] <./imagenes/GCC3.jpg, id=75, 584.0pt x 438.0pt>
 File: ./imagenes/GCC3.jpg Graphic file (type jpg)
  <use ./imagenes/GCC3.jpg>
-Package pdftex.def Info: ./imagenes/GCC3.jpg used on input line 46.
+Package pdftex.def Info: ./imagenes/GCC3.jpg used on input line 48.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
 File: ./imagenes/GCC3.jpg Graphic file (type jpg)
 
 <use ./imagenes/GCC3.jpg>
-Package pdftex.def Info: ./imagenes/GCC3.jpg used on input line 46.
+Package pdftex.def Info: ./imagenes/GCC3.jpg used on input line 48.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
 File: ./imagenes/GCC3.jpg Graphic file (type jpg)
  <use ./imagenes/GCC3.jpg>
-Package pdftex.def Info: ./imagenes/GCC3.jpg used on input line 46.
+Package pdftex.def Info: ./imagenes/GCC3.jpg used on input line 48.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
 
-<./imagenes/Clang3.jpg, id=74, 584.0pt x 438.0pt>
+<./imagenes/Clang3.jpg, id=76, 584.0pt x 438.0pt>
 File: ./imagenes/Clang3.jpg Graphic file (type jpg)
  <use ./imagenes/Clang3.jpg>
-Package pdftex.def Info: ./imagenes/Clang3.jpg used on input line 56.
+Package pdftex.def Info: ./imagenes/Clang3.jpg used on input line 58.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
 File: ./imagenes/Clang3.jpg Graphic file (type jpg)
 
 <use ./imagenes/Clang3.jpg>
-Package pdftex.def Info: ./imagenes/Clang3.jpg used on input line 56.
+Package pdftex.def Info: ./imagenes/Clang3.jpg used on input line 58.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
 File: ./imagenes/Clang3.jpg Graphic file (type jpg)
  <use ./imagenes/Clang3.jpg>
-Package pdftex.def Info: ./imagenes/Clang3.jpg used on input line 56.
+Package pdftex.def Info: ./imagenes/Clang3.jpg used on input line 58.
 (pdftex.def)             Requested size: 321.20099pt x 240.90074pt.
-LaTeX Info: Redefining \. on input line 59.
-LaTeX Info: Redefining \% on input line 59.
+LaTeX Info: Redefining \. on input line 61.
+LaTeX Info: Redefining \% on input line 61.
  [14 <./imagenes/Clang0.jpg> <./imagenes/GCC3.jpg>])
 LaTeX Info: Redefining \. on input line 541.
 LaTeX Info: Redefining \% on input line 541.
@@ -1149,12 +1149,14 @@ e/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/bitstrea/charter/bchri8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmtt10.pfb>
-Output written on informe.pdf (16 pages, 5048157 bytes).
+c/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb>
+Output written on informe.pdf (16 pages, 5063757 bytes).
 PDF statistics:
- 106 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
+ 114 PDF objects out of 1000 (max. 8388607)
+ 62 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  126 words of extra memory for PDF output out of 10000 (max. 10000000)
 

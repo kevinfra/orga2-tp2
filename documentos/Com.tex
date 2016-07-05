@@ -9,7 +9,7 @@ Nuestra hipótesis para este experimento es que el compilador de GCC optimice m�
 en muchos de los sistemas operativos existentes en lugar de GCC (teniendo en cuenta las muchas otras razones por las que puede no ser el caso).
 
 
-Aqui el grafico de GCC
+Aqui el grafico de GCC sin optimización
 
 \begin{figure}[H]
     \centering
@@ -21,7 +21,8 @@ Aqui el grafico de GCC
 \end{figure}
 
 
-Aca vemos que Cropflip, es el filtro mas rapido. Es esperable ya que solo hace accesos a memoria mientras que sepia y cropflip hace operaciones arimeticas
+Aca vemos que Cropflip, que es el filtro más rápido, empieza tomando $4^9$ ciclos de reloj en la imagen más chica y finaliza cerca de la mitad entre $4^8$ y $4^9$.
+Los otros dos filtros alcanzan hasta $4^13$ y $4^15$ ciclos de reloj.
 
 Aqui el grafico de Clang
 
@@ -34,14 +35,15 @@ Aqui el grafico de Clang
     \end{floatrow}
 \end{figure}
 
-Vemos que en Cropflip gana Clang, pero en Sepia y LDR gana GCC, en sepia es mas notorio mientras que en LDR la diferencia es bastante menor.
+Tras este gráfico, observamos que las diferencias de LDR y Sepia son casi nulas entre los compiladores, sin embargo Cropflip tiene la diferencia de que es más
+lineal en cuanto a ciclos de reloj sobre tamaño de la imagen.
 
 
-Ahora, vamos a repetir el mismo experimento pero variando las flags, esta vez vamos a usar 03 y como hipotesis, esperamos ver un comportamiento similar al visto en O0.
+Ahora, vamos a repetir el mismo experimento pero variando las flags, esta vez vamos a usar 03. Como hipotesis, esperamos ver un comportamiento similar al visto en O0.
 \begin{figure}[H]
     \centering
     \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Filtros con GCC -O0}}{%
+      \ffigbox[\FBwidth]{\caption{Filtros con GCC -O3}}{%
         \includegraphics[scale=.55]{./imagenes/GCC3.jpg}
       }
     \end{floatrow}
@@ -51,10 +53,11 @@ Ahora, vamos a repetir el mismo experimento pero variando las flags, esta vez va
 \begin{figure}[H]
     \centering
     \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Filtros con Clang -O0}}{%
+      \ffigbox[\FBwidth]{\caption{Filtros con Clang -O3}}{%
         \includegraphics[scale=.55]{./imagenes/Clang3.jpg}
       }
     \end{floatrow}
 \end{figure}
 
-Efectivamente, se da el comportamiento previsto, en Cropflip gana Clang mientras que en los otros gana GCC
+Ciertamente, se observó lo esperado. Tienen un comportamiento muy similar más allá de los flags de optimización. Podemos entender entonces que la desición
+sobre usar un compilador u otro quedaría simplemente por preferencia y no por performance.
