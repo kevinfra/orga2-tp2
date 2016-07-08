@@ -152,9 +152,9 @@ Ejemplo: cropflip lena32.bmp 128 128 40 50
     \end{floatrow}
 \end{figure}
 
-Para el caso de la implementación en lenguaje C, se toma pixel por pixel y se copia al lugar correspondiente (invirtiendo la imagen)
+Para el caso de la implementación en lenguaje C, el código toma pixel por pixel y lo copia al lugar correspondiente (invirtiendo la imagen)
 en la imagen destino.
-Por otro lado, en el caso de la implementación en lenguaje ensamblador, se utilizan los registros XMM para leer y copiar de a 4 pixels
+Por otro lado, el caso de la implementación en lenguaje ensamblador, utilizamos los registros XMM para que el código lea y copie de a 4 pixels
 en la imagen final.
 
 \subsection{Sepia}
@@ -162,9 +162,9 @@ El filtro sepia, es el conocido filtro de imagenes que simula una foto antigüa.
 de los canales de color (R, G, B. Llamaremos a esta suma ``SumaRGB'') y luego se multiplica por un valor fijo para cada canal (0.5 para el canal R, 0.3 para el G
 y 0.2 para el canal B). Luego, manteniendo la transparencia en caso de haber, el pixel quedaría conformado por A = A, R = SumaRGB*0.5
 , G = SumaRGB*0.3 y B = SumaRGB*0.2. \newline
-Al igual que en Cropflip, en el caso de C, se trabaja pixel por pixel, mientras que en el caso del lenguaje ensamblador se trabaja un poco diferente:
+Al igual que en Cropflip, en el caso de C se trabaja pixel por pixel, mientras que en el caso del lenguaje ensamblador se trabaja un poco diferente:
 Si bien se lee de a 4 pixeles de la imagen original, luego es necesario trabajar pixel por pixel ya que cada canal tiene un tamaño de 1 byte
-y si quisiéramos realizar la suma de los 3 canales de los 4 pixeles en un solo registro, ésta no entraría en un byte. De esta forma, lo que se hace
+y si quisiéramos realizar la suma de los 3 canales de los 4 pixeles en un solo registro, ésta no entraría en un byte. Así, lo que se hace
 es expandir (unpack) cada pixel para que cada canal pase a tener un tamaño de word (2 bytes). Así, la suma máxima será de 255 + 255 + 255, y esto sí
 entra en un espacio de tamaño word. Sin embargo, las instrucciones que provee el procesador Intel para multiplicar por floats, nos obliga
 a realizar otra expanción (unpack) de cada pixel, pero esta vez de word a Double word (4 bytes, mismo tamaño que un float).
@@ -185,12 +185,12 @@ Ejemplo: sepia foto.bmp
 
 \subsection{Low Dynamic Range}
 Este filtro, más conocido como LDR, se logra realizando una serie de cálculos en base a los 25-vecinos de cada pixel del interior
-de la imagen (si tomamos ``interior'' como 2 pixels hacia adentro desde cada borde) y un $\alpha$ pasado por parámetro, el cual puede ser
-un valor entre -255 y 255. Lo que hace es agregar o quitar luminosidad dependiendo de este $\alpha$. El método para lograr este efecto es
+de la imagen (si tomamos ``interior'' como 2 pixels hacia adentro desde cada borde), y a un $\alpha$ pasado por parámetro, el cual puede ser
+un valor entre -255 y 255. Lo que hace el filtro es agregar o quitar luminosidad dependiendo del $\alpha$. El método para lograr este efecto es
 modificar cada canal de color (R,G,B) del pixel a revisar, a través de realizar una suma de los 3 canales de color de los 25-vecinos del pixel a editar (incluyendo el mismo pixel),
 luego se multiplica ese valor por el $\alpha$ y por el valor del canal del pixel en observación. Por último, se divide por un valor ``Max'',
-que se da haciendo el cálculo del posible máximo del cálculo anterior (255*25*3*255), se suma el valor del canal antes multiplicado y antes
-de guardarse, se satura a 0 y 255, que es el maximo de cada canal (ya que como el $\alpha$ puede ser negativo, es necesario tomar el caso
+que se da haciendo el cálculo del posible máximo del cálculo anterior (255*25*3*255); se suma el valor del canal antes multiplicado y antes
+de guardarse, se satura a 0 o 255, que es el maximo de cada canal (ya que como el $\alpha$ puede ser negativo, es necesario tomar el caso
 en que quede un número negativo en el canal).
 \newline
 El caso de C es igual a sepia y cropflip: Se analiza pixel por pixel. El caso del lenguaje ensamblador es parecido, ya que no se pueden
@@ -220,11 +220,11 @@ que los que están hechos en lenguaje C. Sabemos que parte del retraso que tiene
 optimizar el algoritmo implementado; esto es, traducir a código de máquina según la interpretación que le de el compilador al código C. Es por esto
 que usaremos el flag O3 como caso de compilación extra, y así poder comparar distintos métodos de compilación sobre una misma
 implementación del lenguaje C.
-En cambio, para el caso del lenjuage ensamblador, es simplemente traducir a código de máquina, ya que son directamente las instrucciones
-que el procesador deberá ejecutar.
+Para el caso del lenjuage ensamblador, no hay un compilador de por medio, ya que es simplemente traducir a código de máquina desde las instrucciones
+escritas.
 \newline
 Para poder comparar cada implementación de los filtros, los mismos se ejecután reiteradas veces en imagenes de distintos tamaños.
-De cada ejecución, tomaremos el tiempo del clock antes de correr el programa y después de correrlo, y además observaremos
+De cada ejecución, tomaremos el tiempo del clock antes de correr el programa y después de correrlo, y así observaremos
 la cantidad de ciclos de reloj que toma cada vez. Si bien esto puede traer problemas como por ejemplo el tema de los \textit{outliers},
 por razones de probabilidad y estadística, un promedio de cantidades grandes se acercará más a un promedio real.
 
@@ -247,52 +247,62 @@ bloque de 128x128 de la imagen original.
 El primer caso de comparación es la implementación en C compilado sin el Flag O3 contra la implementación en ASM. En el siguiente gráfico
 se puede observar la diferencia de tiempo de cada implementación en ciclos de reloj en función del tamaño de la imagen en pixels.
 
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C sin optimizar vs ASM}}{%
-        \includegraphics[scale=.55]{./imagenes/Cropflip0.jpeg}%cropflip-asmVSc.jpeg}
-      }
-    \end{floatrow}
-\end{figure}
+% \begin{figure}[!ht]
+%     \centering
+%     \begin{floatrow}
+%       \ffigbox[\FBwidth]{\caption{Comparación C sin optimizar vs ASM}}{%
+%         \includegraphics[scale=.55]{./imagenes/Cropflip0.jpeg}%cropflip-asmVSc.jpeg}
+%       }
+%     \end{floatrow}
+% \end{figure}
+\begin{centering}
+	\ffigbox[\FBwidth]{\caption{Comparación C sin optimizar vs ASM}}{%
+		\includegraphics[scale=.55]{./imagenes/Cropflip0.jpeg}
+	}
+\end{centering}
 
-Podemos observar de este experimento que la implementación en C es que si bien está basada en la misma idea que la implementación en ASM,
+Observamos en este experimento que si bien la implementación en C está basada en la misma idea que la implementación en ASM,
 el código generado por el compilador hace que tome mucho más tiempo resolver cada aplicación del filtro hasta el punto de crecer linealmente
 respecto del tamaño de la imágen. Podemos entender esto como una muestra de la diferencia en capacidad de procesamiento de los procesadores que utilizan
-la tecnología SSE contra los que no la utilizan o no tienen.
+la tecnología SSE contra los que no la utilizan o no tienen. Según las muestras tomadas, obtuvimos como resultado que la versión en C es casi 16 veces
+más lenta que la versión en ASM.
 
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
-        \includegraphics[scale=.55]{./imagenes/Cropflip3.jpeg}%cropflip-asmVScO3.jpeg}
-      }
-    \end{floatrow}
-\end{figure}
+% \begin{figure}[!ht]
+%      \centering
+% 		 \begin{floatrow}
+% 		 \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
+%      		\includegraphics[scale=.55]{./imagenes/Cropflip3.jpeg}%cropflip-asmVScO3.jpeg}
+%      }
+%    \end{floatrow}
+% \end{figure}
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
+	\includegraphics[scale=.55]{./imagenes/Cropflip3.jpeg}
+	}
+\end{centering}
 
 En este segundo experimento, comparamos la misma implementación C que el caso anterior pero esta vez compilado con el flag O3,
-el cual permite compilar el código utilizando tecnología SSE. Si bien se puede observar una amplia mejora respecto de la versión
-sin el flag O3, aún se nota mucha diferencia en comparación con la versión de ASM.
+el cual permite compilar el código utilizando tecnología SSE. Si bien se puede observar una amplia mejora (casi 4 veces más rápida) respecto de la versión
+sin el flag O3, aún se nota mucha diferencia en comparación con la versión de ASM. Siguiendo las muestras, la versión ASM es aproximadamente 4 veces más rápida
+que la versión en C con optimización O3.
 \newline
 
-En el siguiente cuadro comparativo se utilizó también el flag que permite utilizar tecnología AVX, el cual contiene acceso
-a registros de 256-bits. A pesar de esto, no hubo una mejora de rendimiento respecto de la compilación sin el flag AVX.
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 y AVX vs ASM}}{%
-        \includegraphics[scale=.39]{./imagenes/cropflip-asmVScO3AVX.jpeg}
-      }
-    \end{floatrow}
-\end{figure}
+Para el siguiente cuadro comparativo se utilizó también el flag que permite utilizar tecnología AVX, el cual contiene acceso
+a registros de 256-bits. A pesar de esto, no hubo una gran mejora de rendimiento respecto de la compilación sin el flag AVX.
 
+
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 y AVX vs ASM}}{%
+	\includegraphics[scale=.55]{./imagenes/cropflip-asmVScO3AVX.jpeg}
+	}
+\end{centering}
+
+\newpage
 
 \subsubsection{Sepia}
-Para el caso del filtro sepia, la implementación realizada en C consiste en lo siguiente: recorrer la matriz entera de pixeles(imagen), y por cada uno calcular la suma de los tres canales. Luego multiplicamos la suma de los canales por 0.5, y al mínimo valor entre éste y 255 se lo asignamos al canal rojo del nuevo pixel de la imagen a generar. La misma suma la multiplicamos por 0.3, calculamos el mínimo entre éste valor y 255, y finalmente se lo asignamos al canal verde del nuevo pixel. El mismo procedimiento se repite para el canal azul pero se multiplica el valor por 0.2. La transperencia se copia de manera exacta en el pixel del destino. La implementación realizada en lenguage ensamblador consiste en traerse cuatro pixeles de por vez, lo que permite reducir la cantidad de accesos a memoria. Luego, por cuestiones de tamaños, no es posible trabajar en paralelo con los 4 pixeles, ya que hay que realizar la suma de todos los canales de los mismos, lo cual no es posible representar el valor máximo que puede llegar a dar esta suma en 8 bits, que es el tamaño de cada canal. Por eso fue necesario expandir los 8 bits de cada canal a 16 bits, por lo cual sólo podiamos trabajar con 2 pixeles en paralelo. Luego de realizada la suma de los canales de los 2 pixeles, se tuvo que convertir el tipo de dato entero a float, lo que también produjo otra expansión del tamaño de los datos de 16 bits a 32 bits ya que es el tamaño requerido para trabajar con floats y poder realizar las multiplicaciones por 0.5,0.3 y 0.2 en cada caso particular. Para realizar las multiplicaciones se tuvo que hacer de a pixel por vez, debido a los 32 bits requeridos por cada canal. Luego se empaquetaron todos los resultados de los 4 pixeles individualmente, con cada canal en word, en un único registro, el cual se copia a memoria para poder copiar de a 4 pixeles. Básicamente, la mayor ganancia con esta implementación realizada en assembler, respecto de C, es que se leen y graban de a 4 pixeles por vez.
-\newline
-Para el caso de los expermientos, se corrieron varios tests sobre imágenes de distintos tamaños, que es la única variable que está en juego para este filtro ya que no recibe ningún parámetro adicional.
-\newline
-El primer caso de comparación es la implementación en C, sin usar ninguna optimización en la compilación, contra la implementación en ASM.
+Para el filtro Sepia, al no recibir parámetros extra, se decidió solamente evaluar con distintos tamaños de imágenes.
+Esta es la única variable en juego, por lo que se puede analizar mejor cómo varía el filtro entre ASM y C en cuanto a ciclos de clock
+respecto del tamaño de la imagen.
 
 %\begin{figure}[!ht]
 %    \centering
@@ -302,16 +312,19 @@ El primer caso de comparación es la implementación en C, sin usar ninguna opti
 %      }
 %    \end{floatrow}
 %\end{figure}
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C sin optimización vs ASM}}{%
+	\includegraphics[scale=.4]{./imagenes/sepia-asmVSc.jpeg}
+	}
+\end{centering}
 
-\noindent%
-\begin{minipage}{\linewidth}% to keep image and caption on one page
-\makebox[\linewidth]{%        to center the image
-  \includegraphics[keepaspectratio=true,scale=0.4]{./imagenes/sepia-asmVSc.jpeg}}
-\captionof{figure}{Comparación C sin optimización vs ASM}%\label{visina8}%      only if needed
-\end{minipage}
-\ \
-
-Se puede observar claramente una relación lineal entre el tamaño de la imágen y el tiempo de procesamiento en ambas implementaciones, lo cual resulta intuitivo debido a los algoritmos utilizados. También se aprecia una brecha entre el tiempo que tomó correr los expermientos en C y Assembler, resaltando que los expermientos en assembler requirieron menos ciclos de clock para procesarse. Esta diferencia era la esperada, debido principalmente a la reducción de accesos a memoria gracias a la utilización de SSE en el código de Assembler. Se compararon las mismas implementaciones pero usando diferentes flags de optimizaciones para que realizara el compilador de C. Los resultados son los que arrojan los siguientes gráficos:
+Observamos en este experimento una brecha no tan amplia como el caso de Cropflip
+entre el tiempo que tomó correr los expermientos en C y el que tomó en Assembler, pero resaltando
+que los expermientos en assembler requirieron menos ciclos de clock para procesarse.
+Esta diferencia era la esperada, debido principalmente a la reducción de accesos a
+memoria gracias a la utilización de la tecnología SSE en el código de Assembler. Comparamos también las
+mismas implementaciones pero usando diferentes flags de optimización para que
+realizara el compilador de C. Los resultados son los que arrojan los siguientes gráficos:
 
 %\begin{figure}[!ht]
 %    \centering
@@ -322,15 +335,17 @@ Se puede observar claramente una relación lineal entre el tamaño de la imágen
 %    \end{floatrow}
 %\end{figure}
 
-\noindent%
-\begin{minipage}{\linewidth}% to keep image and caption on one page
-\makebox[\linewidth]{%        to center the image
-  \includegraphics[keepaspectratio=true,scale=0.4]{./imagenes/sepia-asmVScO3.jpeg}}
-\captionof{figure}{Comparación C con flag O3 vs ASM}%\label{visina8}%      only if needed
-\end{minipage}
-\ \
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C con flag O3 vs ASM}}{%
+	\includegraphics[scale=.4]{./imagenes/sepia-asmVScO3.jpeg}
+	}
+\end{centering}
 
-Al utilizar el flag de optimización O3, el código generado por el compilador fue mucho más eficiente. Se observa en el gráfico una notable disminución de los tiempos de ejecución del código realizado en C, el cual casi iguala a la performance del realizado en ASM.
+Al utilizar el flag de optimización O3, el código generado
+por el compilador fue mucho más eficiente. Se observa en el
+gráfico una notable disminución de los tiempos de ejecución
+del código realizado en C, el cual casi iguala a la performance
+del realizado en ASM.
 
 %\begin{figure}[!ht]
 %    \centering
@@ -341,15 +356,20 @@ Al utilizar el flag de optimización O3, el código generado por el compilador f
 %    \end{floatrow}
 %\end{figure}
 
-\noindent%
-\begin{minipage}{\linewidth}% to keep image and caption on one page
-\makebox[\linewidth]{%        to center the image
-  \includegraphics[keepaspectratio=true,scale=0.4]{./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg}}
-\captionof{figure}{Comparación C con flag O3 y mavx vs ASM}%\label{visina8}%      only if needed
-\end{minipage}
-\ \
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C con flag O3 y mavx vs ASM}}{%
+	\includegraphics[scale=.4]{./imagenes/sepia-asmVScO3SSE4-2AVX.jpeg}
+	}
+\end{centering}
 
-Este fue el resultado más interesante. Al compilar con la opción de AVX, que es una tecnología con nuevas instrucciones y expande los registos de 128 bits a 256 bits, se observa que el código generado por el compilador de C es ligeramente más óptimo en términos de tiempo de procesamiento que el realizado por nosotros en assembler. Era un resultado igualmente esperable, ya que al utilizar registros de 256 bits se reducen aún más los accesos a memoria necesarios para traer y guardar pixeles. La relación lineal entre tamaño de imagen y tiempo de procesamiento se mantiene nuevamente en el experimento.
+Este fue el resultado más interesante. Al compilar con la opción de AVX,
+que es una tecnología con nuevas instrucciones y expande los registos de
+128 bits a 256 bits, se observa que el código generado por el compilador
+de C es ligeramente más óptimo en términos de tiempo de procesamiento que
+el realizado por nosotros en assembler. Era un resultado igualmente esperable,
+ya que al utilizar registros de 256 bits se reducen aún más los accesos a memoria
+necesarios para traer y guardar pixeles. La relación lineal entre tamaño de imagen
+y tiempo de procesamiento se mantiene nuevamente en el experimento.
 
 \subsubsection{Low Dynamic Range}
 La idea específica de la implementación de este filtro tanto en C como en Assembler es ver pixel por pixel y realizar los cálculos
@@ -388,14 +408,14 @@ Assembler es aún más rápida que la de C.
 \ \
 
 En el segundo experimento, comparamos la implementación C compilando con el flag de optimización O3. A continuación se puede ver el gráfico del mismo:
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
-        \includegraphics[scale=.4]{./imagenes/ldr-asmVScO3.jpeg}
-      }
-    \end{floatrow}
-\end{figure}
+
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C con optimización O3 vs ASM}}{%
+	\includegraphics[scale=.4]{./imagenes/ldr-asmVScO3.jpeg}
+	}
+\end{centering}
+
+
 Podemos analizar en este caso que el flag O3 realmente cambia el rendimiento de la implementación. Si bien ya no es tán lineal como lo era en el
 experimento anterior, ahora se acerca mucho al performance de la implementación en Assembler.
 \newline
@@ -423,37 +443,37 @@ La diferencia entre las implementaciones de Croplfip es que en la primera versi�
 dentro del mismo loop, lo cual creemos que esto podría afectar en tamaños grandes de imagenes al aplicar el filtro. El siguiente gráfico muestra el tiempo que toma
 cada filtro para aplicarse en imgenes que varían en tamaño original pero no en el tamaño que se desea filtrar.
 
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C  de Cropflip sin optimización}}{%
-        \includegraphics[scale=.55]{./imagenes/implementacionesC-CropflipSinO3.jpeg}
-      }
-    \end{floatrow}
-\end{figure}
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C  de Cropflip sin optimización}}{%
+	\includegraphics[scale=.55]{./imagenes/implementacionesC-CropflipSinO3.jpeg}
+	}
+\end{centering}
 
-
-Podemos notar como la segunda implementación supera a la primera comparando segun los ciclos de reloj, pero no por mucha diferencia. Tal como esperabamos,
+Podemos notar como la segunda implementación supera a la primera comparando los ciclos de reloj, pero no por mucha diferencia. Tal como esperabamos,
 esto ocurre porque son cálculos matemáticos simples, como sumas y restas, y no accesos a memoria o divisiones.
+En ambos casos, es un tiempo casi constante más allá del tamaño de la imagen. Al igual que en anteriores experimentos, esto se debe a que el filtro
+recorta siempre el mismo tamaño de imagen. Para la primera implementación obtuvimos un tiempo de 171040~ ciclos de reloj en promedio por ejecución, mientras
+que para el segundo, el promedio fue de 150064. Casi 20000 ciclos de reloj de diferencia, lo cual es bastante si se tiene en cuenta que la cantidad de
+accesos a memoria es la misma en ambos casos.
 
 También comparamos estas dos implementaciones utilizando el flag O3 en el compilador y comparando nuevamente con la verisón de ASM.
-\begin{figure}[!ht]
-    \centering
-    \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Comparación C vs ASM con optimización entre CropflipCv1, CropflipCv2 y CropflipASM}}{%
-        \includegraphics[scale=.55]{./imagenes/implementacionesCASM-cropflipConO3.jpeg}
-      }
-    \end{floatrow}
-\end{figure}
+
+\begin{centering}
+\ffigbox[\FBwidth]{\caption{Comparación C vs ASM con optimización entre CropflipCv1, CropflipCv2 y CropflipASM}}{%
+	\includegraphics[scale=.55]{./imagenes/implementacionesCASM-cropflipConO3.jpeg}
+	}
+\end{centering}
 
 En este grafico podemos observar que utilizando el flag de optimización O3, en algunos casos la primera implementación en C de Cropflip puede llegar
-a ser levemente superior a la segunda. Sin embargo, esta comparación queda opacada cuando se tiene en cuenta la implementación en ASM, la cual es
-ampliamente más rápida que las otras dos.
+a ser levemente superior a la segunda. Esto también implica que la optimizacion que realiza el compilador hace que la diferencia escrita en el código de la segunda versión
+ quede prácticamente de lado, ya que evidentemente los ciclos de reloj son casi iguales más allá de si los cálculos de sumas y restas se hacen en el ciclo que recorre la imagen o no.
+ Sin embargo, esta comparación no tiene sentido cuando se tiene en cuenta la implementación en ASM, la cual es
+ampliamente más rápida que las otras dos. Otra vez vemos que la versión de ASM realiza un mejor trabajo a pesar de ser más dificil de programar.
 
 \subsubsection{Sepia ASM vs Sepia ASM}
-En esta segunda implementación el cambio principal fue que en lugar de multiplicar valores de punto flotante para realizar divisiones, lo que se hizo
-fue reemplazar esos valores por números entereros, multiplicandolos por 10 y luego dividir por los resultados. La multiplicación por 10 también debió hacerse
-en el número con el cual se iba a utilizar como dividendo para mantener la relación. Esta vez, esperamos nuevamente que la segunda implementación supere a la primera.
+En esta segunda implementación el cambio principal fue que en lugar de multiplicar valores de punto flotante para realizar divisiones, se reemplazan
+ esos valores por números entereros, multiplicandolos por 10 y luego dividiéndolos por los resultados. La multiplicación por 10 también debió hacerse
+en el número con el cual se iba a utilizar como divisores para mantener la relación. Esta vez, esperamos nuevamente que la segunda implementación supere a la primera.
 
 \begin{figure}[!ht]
     \centering
@@ -471,7 +491,10 @@ a que realizar divisiones es mucho más costoso que multiplicar por unidades de 
 Siguiendo con los experimentos, realizamos una serie de ejecuciones del filtro LDR con imágenes de distintos colores. Siempre utilizando imágenes de
 tamaño 512x512px y aplicando el filtro 100000 veces por imagen con un alpha de 250. Utilizamos en este experimento una imagen completamente roja, una verde, una azul (es decir,
 una por cada color base de RGB, colocando cada pixel en el máximo de ese canal y los otros en 0), una blanca (todos los canales RGB en 255), una negra
-(los canales RGB en 0) y por último una imágen con colores variados. Nuestra hipótesis era que al ser un filtro en el que solo se realizan cuentas matemáticas
+(los canales RGB en 0) y por último una imágen con colores variados.
+
+\subsubsection{Análisis de tiempos de clock entre todas las imágenes}
+Nuestra hipótesis era que al ser un filtro en el que solo se realizan cuentas matemáticas
 más allá del color de cada pixel y no se hacen, por ejemplo, accesos a memoria si un pixel tiene tal color o que si por la suma de otros se hace tal cosa. Entonces,
 pusimos a prueba esta idea y plasmamos en un gráfico de barras los datos obtenidos de calcular el promedio de la cantidad de ciclos de reloj por cada ejecucion del filtro
 en cada imagen.
@@ -490,7 +513,24 @@ sin embargo, esta diferencia no es tan notoria como sí puede ser la diferencia 
 Para dar datos más precisos, la mayor diferencia entre las imágenes probadas es entre la imagen negra y la roja. Tomando la diferencia en ciclos de reloj
 parece ser bastante, pero en porcentaje, la demora que tiene el filtro en la imagen negra respecto de la roja es de menos de un 1\%.
 Incluso en ciclos de reloj, se puede notar la cercanía al volver al experimento de C vs ASM, en el que se pueden llegar a observar diferencias de, por ejemplo,
- 115139916 ciclos de reloj (C vs ASM del filtro LDR en una imagen de 512x512).
+115139916 ciclos de reloj (C vs ASM del filtro LDR en una imagen de 512x512).
+
+\subsubsection{Análisis por imágen}
+Lo último que realizamos en cuanto al análisis de imagenes de colores lisos fue ver cómo cambiaban según el $\alpha$ que se pasa por parámetro
+para LDR. Nuestra hipótesis esta vez fue que cambiaría todas lás imagenes cuando se le pase un $\alpha$ negrativo excepto a la imagen negra, la cual
+no cambiaría en absoluto para ningún $\alpha$.
+
+En el anexo de comparación de imágenes lisas se pueden ver las imagenes originales y sus versiones en ldr con $\alpha$ $255$ y $-255$.
+
+Lo que pudimos notar al ver las imagenes que obtuvimos fue que todas (excepto la negra y la blanca que son un caso separado) varían más
+cuando se utilizaba el $\alpha$ negativo pero que de todas formas se percibía una diferencia con las que se usaba el $\alpha$ positivo.
+
+Para el caso de la imagen blanca, fue sorprendente ver cómo se transformó básicamente en una imagen completamente negra cuando se utilizó el $\alpha$
+negativo, mientras que para el positivo era, como se esperaba, la misma imagen. Eso se debe a que en el formato RGB, el color blanco se representa por
+[255, 255, 255], por lo que al utilizar el $\alpha$ positivo, la imagen simplemente satura a 255 cada canal; al usar el $\alpha$ negativo, es básicamente
+hacer que cada canal de cada pixel sature a 0.
+Por último, para la imagen negra fue exactamente lo esperado. Al representarse en el formato RGB como [0, 0, 0], multiplicar cualquier valor en cualquier canal
+haría simplemente que siga siendo 0, y eso es parte del funcionamiento del filtro ldr. Sumas y multiplicaciones, pero que en este caso darían siempre 0.
 
 \input{Com}
 
@@ -539,6 +579,99 @@ En el caso de usar la tecnología de AVX, todos las implementaciones deberían t
 procesamiento menor que las anteriores, ya que con registros de 256 bits y nuevas instrucciones se pueden
 procesar aún más datos paralelamente.
 
+\newpage
+\section{Anexo de comparación de imágenes lisas}
+
+
+ \begin{figure}[!ht]
+     \centering
+     \begin{floatrow}
+       \ffigbox[\FBwidth]{\caption{Blanca original}}{%
+         \includegraphics[scale=.2]{./imagenes/blanca.jpg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Blanca con $\alpha$ $255$}}{%
+         \includegraphics[scale=.2]{./imagenes/blanca-255.jpeg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Blanca con $\alpha$ $-255$}}{%
+         \includegraphics[scale=.2]{./imagenes/blanca--255.jpeg}
+       }
+     \end{floatrow}
+ \end{figure}
+
+ \begin{figure}[!ht]
+     \centering
+     \begin{floatrow}
+       \ffigbox[\FBwidth]{\caption{Negra original}}{%
+         \includegraphics[scale=.2]{./imagenes/negra.jpg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Negra con $\alpha$ $255$}}{%
+         \includegraphics[scale=.2]{./imagenes/negra-255.jpeg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Negra con $\alpha$ $-255$}}{%
+         \includegraphics[scale=.2]{./imagenes/negra--255.jpeg}
+       }
+     \end{floatrow}
+ \end{figure}
+
+ \begin{figure}[!ht]
+     \centering
+     \begin{floatrow}
+       \ffigbox[\FBwidth]{\caption{Roja original}}{%
+         \includegraphics[scale=.2]{./imagenes/roja.jpg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Blanca con $\alpha$ $255$}}{%
+         \includegraphics[scale=.2]{./imagenes/roja-255.jpeg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Blanca con $\alpha$ $-255$}}{%
+         \includegraphics[scale=.2]{./imagenes/roja--255.jpeg}
+       }
+     \end{floatrow}
+ \end{figure}
+
+ \begin{figure}[!ht]
+     \centering
+     \begin{floatrow}
+       \ffigbox[\FBwidth]{\caption{Azul original}}{%
+         \includegraphics[scale=.2]{./imagenes/azul.jpg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Azul con $\alpha$ $255$}}{%
+         \includegraphics[scale=.2]{./imagenes/azul-255.jpeg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Azul con $\alpha$ $-255$}}{%
+         \includegraphics[scale=.2]{./imagenes/azul--255.jpeg}
+       }
+     \end{floatrow}
+ \end{figure}
+
+ \begin{figure}[!ht]
+     \centering
+     \begin{floatrow}
+       \ffigbox[\FBwidth]{\caption{Verde original}}{%
+         \includegraphics[scale=.2]{./imagenes/verde.jpg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Verde con $\alpha$ $255$}}{%
+         \includegraphics[scale=.2]{./imagenes/verde-255.jpeg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Verde con $\alpha$ $-255$}}{%
+         \includegraphics[scale=.2]{./imagenes/verde--255.jpeg}
+       }
+     \end{floatrow}
+ \end{figure}
+
+ \begin{figure}[!ht]
+     \centering
+     \begin{floatrow}
+       \ffigbox[\FBwidth]{\caption{Colores original}}{%
+         \includegraphics[scale=.27]{./imagenes/colores.jpeg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Blanca con $\alpha$ $255$}}{%
+         \includegraphics[scale=.27]{./imagenes/colores-255.jpeg}
+       }
+			 \ffigbox[\FBwidth]{\caption{Blanca con $\alpha$ $-255$}}{%
+         \includegraphics[scale=.27]{./imagenes/colores--255.jpeg}
+       }
+     \end{floatrow}
+ \end{figure}
 
 %\begin{codesnippet}
 %\begin{verbatim}

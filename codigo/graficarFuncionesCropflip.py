@@ -31,6 +31,6 @@ ax1.set_xscale('log', basex=4)
 
 leg = ax1.legend()
 
-leg = plt.legend( loc = 'upper left')
+leg = plt.legend( loc = 'center right')
 
 plt.show()

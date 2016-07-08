@@ -63,14 +63,14 @@ if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
     	echo "corriendo filtro cropflip asm para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropasm
 		t=$i-128
-		./build/tp2 cropflip -i asm ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropasm
+		./build/tp2 cropflip -i asm ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 1000000 >>cropasm
 	done
 
 	for (( i = 128; i < 1700; i=i+128 )); do
     	echo "corriendo filtro cropflip c para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropc
 		t=$i-128
-		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropc
+		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 1000000 >>cropc
 	done
 fi
 rm bastachicos.*

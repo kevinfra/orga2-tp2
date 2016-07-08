@@ -86,7 +86,7 @@ if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
     	echo "corriendo filtro cropflip c V1 para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropasm
 		t=$i-128
-		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropasm
+		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100000 >>cropasm
 	done
 
 	mv filtros/cropflip_c.c filtros/cropflip_cV1.c
@@ -99,7 +99,7 @@ if [[ $filtros = "cropflip" || $filtros == "all" ]]; then
      	echo "corriendo filtro cropflip c V2 para una matriz de $i x $i"
 	 	printf '%i   ' $(($i*$i)) >> cropc
 	 	t=$i-128
-	 	./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropc
+	 	./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100000 >>cropc
 	done
 
 	mv filtros/cropflip_c.c filtros/cropflip_cV2.c
@@ -118,7 +118,7 @@ if [[ $filtros = "cropflip3" ]]; then
     	echo "corriendo filtro cropflip c V1 para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropCv1
 		t=$i-128
-		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropCv1
+		./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100000 >>cropCv1
 	done
 
 	mv filtros/cropflip_c.c filtros/cropflip_cV1.c
@@ -131,7 +131,7 @@ if [[ $filtros = "cropflip3" ]]; then
      	echo "corriendo filtro cropflip c V2 para una matriz de $i x $i"
 	 	printf '%i   ' $(($i*$i)) >> cropCv2
 	 	t=$i-128
-	 	./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropCv2
+	 	./build/tp2 cropflip -i c ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100000 >>cropCv2
 	done
 
 	mv filtros/cropflip_c.c filtros/cropflip_cV2.c
@@ -144,7 +144,7 @@ if [[ $filtros = "cropflip3" ]]; then
 		echo "corriendo filtro cropflip ASM para una matriz de $i x $i"
 		printf '%i   ' $(($i*$i)) >> cropASM1
 		t=$i-128
-		./build/tp2 cropflip -i asm ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100 >>cropASM1
+		./build/tp2 cropflip -i asm ./img/bastachicos.${i}x${i}.bmp 128 128 $t $t -t 100000 >>cropASM1
 	done
 
 fi
