@@ -1,0 +1,20 @@
+Scripteando comun
+Promedio O0 
+
+Sepia ASM es 5,26 veces mas rapida
+
+Cropflip ASM es 20.26 veces mas rapida
+
+LDR ASM es 7.14 veces mas rapida
+
+
+Promedio O3	
+
+LDR ASM es 1.40 mas rapido que C
+
+Crop ASM es 2.26 mas rapido
+
+Sepia ASM es 1.16 veces mas rapida
+
+
+Scripteando con 2 IMP
