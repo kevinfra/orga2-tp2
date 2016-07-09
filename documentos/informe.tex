@@ -420,7 +420,7 @@ Podemos analizar en este caso que el flag O3 realmente cambia el rendimiento de 
 experimento anterior, ahora se acerca mucho al performance de la implementación en Assembler.
 \newline
 Como último experimento, agregamos el flag que permite utilizar los registros de 256 bits. Esta vez, se asemeja mucho al experimento anterior, pero
-sigue siento un poco más rápido. El crecimiento de la cantidad de ciclos de procesador que toma, crece respecto del tamaño de la imagen de la misma
+sigue siendo un poco más rápido. El crecimiento de la cantidad de ciclos de procesador que toma, crece respecto del tamaño de la imagen de la misma
 forma que sin el flag AVX.
 
 \begin{figure}[!ht]
@@ -441,7 +441,7 @@ notoria en ASM, no así en C.
 \subsubsection{Cropflip C vs Cropflip C}
 La diferencia entre las implementaciones de Croplfip es que en la primera versión, se realizaban algunos cálculos sobre el siguiente pixel a copiar
 dentro del mismo loop, lo cual creemos que esto podría afectar en tamaños grandes de imagenes al aplicar el filtro. El siguiente gráfico muestra el tiempo que toma
-cada filtro para aplicarse en imgenes que varían en tamaño original pero no en el tamaño que se desea filtrar.
+cada filtro para aplicarse en imágenes que varían en tamaño original pero no en el tamaño que se desea filtrar.
 
 \begin{centering}
 \ffigbox[\FBwidth]{\caption{Comparación C  de Cropflip sin optimización}}{%
@@ -530,7 +530,7 @@ negativo, mientras que para el positivo era, como se esperaba, la misma imagen. 
 [255, 255, 255], por lo que al utilizar el $\alpha$ positivo, la imagen simplemente satura a 255 cada canal; al usar el $\alpha$ negativo, es básicamente
 hacer que cada canal de cada pixel sature a 0.
 Por último, para la imagen negra fue exactamente lo esperado. Al representarse en el formato RGB como [0, 0, 0], multiplicar cualquier valor en cualquier canal
-haría simplemente que siga siendo 0, y eso es parte del funcionamiento del filtro ldr. Sumas y multiplicaciones, pero que en este caso darían siempre 0.
+haría simplemente que siga siendo 0, y eso es parte del funcionamiento del filtro ldr, sumas y multiplicaciones, pero que en este caso darían siempre 0.
 
 \input{Com}
 
@@ -546,7 +546,7 @@ No obstante, al utilizar flags de optimización en la compilación de los algori
 implementados en C, la situación cambió en algunos expermientos. Para el caso particular
 del filtro sepia, resultó ligeramente más óptima en términos de tiempo de ejecución
 la implementación en C, compilada con optimización O3 y para que utilize la tecnología
-AVX con registros de 256 bits, que la implemtación realizada en Assembler. Esto puede deberse
+AVX con registros de 256 bits, que la implementación realizada en Assembler. Esto puede deberse
 a que al tener registros aún más grandes que los utilizados en Assembler (SSE de 128 bits),
 el código que generó el compilador permite procesar aún más datos en paralelo.
 Para el caso de Low Dynamic Range se notó una mejoría significativa usando la misma optimización
@@ -567,10 +567,7 @@ también se almacenen en registros de 128 bits las sumas parciales de estos 25 v
 no haya que calcularlas todas nuevamente para el pixel próximo. La idea sería que solamente se
 tenga que computar lo que cambia, y lo que de alguna manera permanezca igual se puede almacenar.
 Esto reduciría los accesos a memoria y las operaciones a realizar, lo que supondría una mejora en
-el tiempo de ejecución que llevaría el filtro. Para el caso de sepia se podría probar con una
-implementación que en vez de realizar una multiplicación por un número decimal, realice una multiplicación
-por un entero y división por un entero para cada canal. Consideramos igualmente que esta implementación
-sería menos óptima en términos de ciclos de clock que la realizada actualmente. Para el caso de
+el tiempo de ejecución que llevaría el filtro. Para el caso de
 Cropflip no hay muchas formas de realizar la copia a memoria de la nueva imagen. Se podría probar
 con una implementación que recorra la imagen en otro orden o que la copie a memoria en otro orden,
 pero esto no supondría una diferencia significativa. Se podría usar instrucciones de la tecnología

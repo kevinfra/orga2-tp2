@@ -5,7 +5,7 @@ Lo que hicimos en este experimento fue compilar los filtros con GCC y Clang en s
 %Lo que vamos a hacer es compilar el codigo con Clang/GCC y ver si encontramos diferencias.Para comparar, se van a usar la version 4.8.4 de GCC y la 3.4 de Clang.
 %Para realizar la comparacion, vamos a compilar el TP con GCC y luego con Clang.
 %Para empezar, vamos a comparar con optimizacion nula
-Nuestra hipótesis para este experimento es que el compilador de GCC optimice más el código producido que Clang, ya que en caso contrario, este último estaría instalado por defecto
+Nuestra hipótesis para este experimento es que el compilador de GCC optimiza más el código producido que Clang, ya que en caso contrario, este último estaría instalado por defecto
 en muchos de los sistemas operativos existentes en lugar de GCC (teniendo en cuenta las muchas otras razones por las que puede no ser el caso).
 
 
@@ -22,7 +22,7 @@ Aqui el grafico de GCC sin optimización
 
 
 Aca vemos que Cropflip, que es el filtro más rápido, empieza tomando $4^9$ ciclos de reloj en la imagen más chica y finaliza cerca de la mitad entre $4^8$ y $4^9$.
-Los otros dos filtros alcanzan hasta $4^13$ y $4^15$ ciclos de reloj.
+Los otros dos filtros alcanzan hasta $4^1^3$ y $4^1^5$ ciclos de reloj.
 
 Aqui el grafico de Clang
 
@@ -36,7 +36,7 @@ Aqui el grafico de Clang
 \end{figure}
 
 Tras este gráfico, observamos que las diferencias de LDR y Sepia son casi nulas entre los compiladores, sin embargo Cropflip tiene la diferencia de que es más
-lineal en cuanto a ciclos de reloj sobre tamaño de la imagen.
+constante en cuanto a ciclos de reloj sobre tamaño de la imagen.
 
 
 Ahora, vamos a repetir el mismo experimento pero variando las flags, esta vez vamos a usar 03. Como hipotesis, esperamos ver un comportamiento similar al visto en O0.
