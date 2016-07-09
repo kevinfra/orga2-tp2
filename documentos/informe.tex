@@ -143,8 +143,8 @@ Ejemplo: cropflip lena32.bmp 128 128 40 50
 \begin{figure}[!ht]
     \centering
     \begin{floatrow}
-      \ffigbox[\FBwidth]{\caption{Antes del filtro cropflip (escala 25\%)}}{%
-        \includegraphics[scale=.25]{./imagenes/lena32.jpg}
+      \ffigbox[\FBwidth]{\caption{Antes del filtro cropflip (escala 20\%)}}{%
+        \includegraphics[scale=.20]{./imagenes/lena32.jpg}
       }
       \ffigbox[\FBwidth]{\caption{Después del filtro cropflip (escala 50\%)}}{%
        \includegraphics[scale=.50]{./imagenes/lena32-cropflip.jpg}
@@ -182,7 +182,7 @@ Ejemplo: sepia foto.bmp
       }
     \end{floatrow}
 \end{figure}
-
+\newline
 \subsection{Low Dynamic Range}
 Este filtro, más conocido como LDR, se logra realizando una serie de cálculos en base a los 25-vecinos de cada pixel del interior
 de la imagen (si tomamos ``interior'' como 2 pixels hacia adentro desde cada borde), y a un $\alpha$ pasado por parámetro, el cual puede ser
@@ -489,7 +489,7 @@ a que realizar divisiones es mucho más costoso que multiplicar por unidades de 
 
 \subsection{Comparación de imágenes}
 Siguiendo con los experimentos, realizamos una serie de ejecuciones del filtro LDR con imágenes de distintos colores. Siempre utilizando imágenes de
-tamaño 512x512px y aplicando el filtro 100000 veces por imagen con un alpha de 250. Utilizamos en este experimento una imagen completamente roja, una verde, una azul (es decir,
+tamaño 512x512px y aplicando el filtro 1000 veces por imagen con un alpha de 250. Utilizamos en este experimento una imagen completamente roja, una verde, una azul (es decir,
 una por cada color base de RGB, colocando cada pixel en el máximo de ese canal y los otros en 0), una blanca (todos los canales RGB en 255), una negra
 (los canales RGB en 0) y por último una imágen con colores variados.
 
